@@ -1,6 +1,19 @@
-*{
-  margin: 0;
-  padding: 0;
+:root {
+  --blue: #4585E4;
+  --yellow: #FFF500;
+  --white: #FFFFFF;
+  --lightBlue:#CEE2FF;
+  --menuBlue: #9EBFF1; 
+  --lightYellow: #FFFEDB;
+}
+
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1 rem = 10px */    
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 .container{
@@ -8,4 +21,13 @@
     top: 0;
     right: 0;
     width: 100%;
-  }
+}
+
+.icons{
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+}
+img{
+  max-width: 100%;
+}

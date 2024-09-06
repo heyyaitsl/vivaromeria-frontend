@@ -1,5 +1,5 @@
 import './PilgrimageListElement.css'
-import { getStatus, getStatusClass } from 'src/common/statusUtils.jsx'
+import { getStatus, getStatusClass } from 'src/common/StatusUtils.jsx'
 import { getDate } from 'src/common/dateUtils'
 export function PilgrimageListElement({name, status, date, place}) {
     

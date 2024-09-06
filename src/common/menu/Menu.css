@@ -1,63 +1,119 @@
 .navbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 1rem;
     align-items: center;
-    justify-content: space-between;
-    background-color: #448aff;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--blue);
+    padding: 2rem;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
+
 .navbar-logo img {
-    height: 40px;
+    height: 4rem;
 }
 
 .search-container {
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    opacity: 48%;
-    border-radius: 20px;
-    padding: 5px 10px;
-    max-width: 400px;
-    width: 100%;
+    justify-content: space-between;
+    background-color: var(--menuBlue);
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
+    padding: 0.5rem 1rem ;
+    max-width: 25rem;
 }
 
 .search-bar {
     border: none;
     background: none;
-    font-size: 14px;
-    flex: 1;
+    font-size: 1.4rem;
     outline: none;
+    color: var(--white);
 }
 
 .search-bar::placeholder {
-    color: #90a4ae;
+    color: var(--white);
 }
 
 .search-button {
     background: none;
     border: none;
-    color: #90a4ae;
-    cursor: pointer;
-    font-size: 16px;
 }
 
-.navbar-icons {
+.left-fields {
+    position: absolute;
+    right: 2rem;
     display: flex;
     align-items: center;
     gap: 15px;
-}
 
-.navbar-icons i {
-    color: white;
-    font-size: 18px;
+}
+.icons-nav{
     cursor: pointer;
+    height: 1.8rem;
+    width: 1.8rem;
 }
 
-.profile img {
+
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.profile-img {
     height: 35px;
     width: 35px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #fff;
+}
+
+
+
+.button-login{
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+
+}
+.button-login:hover{
+    text-decoration: underline;
+    font-weight: bold;
+
+}
+
+.icon-box {
+    display: block;
+    visibility: hidden;
+    position: absolute;
+    right: 0rem;    
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
+    background-color: var(--menuBlue);
+
+}
+.profile-list{
+    list-style: none;
+    margin:0;
+    padding: 1rem;
+}
+.profile-element{
+    cursor: pointer;
+    padding: 1rem;
+    color: var(--white);
+    font-size: 1.2rem;
+}
+.profile-element:hover{
+    text-decoration: underline;
+    background-color: var(--lightBlue);
+}
+.profile-list li + li{
+    border-top: 1px solid var(--white);
+}
+
+.profile:hover +.icon-box{
+    display: block;
+    visibility: visible;
 }
