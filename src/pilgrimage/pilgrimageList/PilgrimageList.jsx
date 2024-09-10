@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { PilgrimageListElement } from './PilgrimageListElement';
+import { Box, Button, Link } from '@mui/material';
+import { PilgrimagePage } from '../../pages/PilgrimagePage';
+import { generatePath, useNavigate } from 'react-router-dom';
 
 export function PilgrimageList(){
     const urlBase = "http://localhost:8080/pilgrimages";
@@ -14,11 +17,18 @@ export function PilgrimageList(){
             console.log(result.data);
             setPilgrimages(result.data);
         }
+
+
+
+
+    
+    
     return (
         <>
         {pilgrimages.map((pilgrimage, id) => (
+            <Link key={id} href={generatePath("/:id", {id: pilgrimage.id})} sx={{textDecoration:"none"}}>
             <PilgrimageListElement name={pilgrimage.name} place={pilgrimage.place}
-            date={pilgrimage.date} status={pilgrimage.status}/>
+            date={pilgrimage.date} status={pilgrimage.status}/></Link>
         ))}
         </>
     )

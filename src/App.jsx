@@ -1,8 +1,9 @@
 import './App.css'
- import { PilgrimageList } from './pilgrimage/pilgrimageList/PilgrimageList.jsx'
 import { Menu } from './common/menu/Menu.jsx'
 import { Box, Container } from '@mui/material'
-import { Pilgrimage } from './pilgrimage/pilgrimageDetails/Pilgrimage.jsx'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Home } from './pages/Home.jsx'
+import { PilgrimagePage } from './pages/PilgrimagePage.jsx'
 
 
 
@@ -10,16 +11,19 @@ export function App() {
 
   return (
     <>
-    <div className='container'>
-    <Menu isLogged={true} /> 
-    </div>
-    <PilgrimageList/>
-    <Container sx={{mt:15 }}>
-      <Box>
-        
-        <Pilgrimage/>
-      </Box>
-    </Container>
+    <Router>
+    <Menu isLogged={true} />
+    <Container sx={{ mt: 15 }}>
+      <Routes>
+     
+      <Route path='/' element={<Home/>}></Route>
+      <Route path='/:id' element={<PilgrimagePage/>}></Route>
+
+      </Routes>
+
+      </Container>
+      </Router>
+    
     </>
 
   )

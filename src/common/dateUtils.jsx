@@ -5,3 +5,9 @@ export function getDate(localDateTimeString) {
 
     return date.toLocaleDateString('es-ES', options);
 }
+
+export function getHour(localDateTimeString){
+    const date = new Date(localDateTimeString);
+    const options = { hour: 'numeric', minute: 'numeric'};
+    return date.toLocaleTimeString([],options);
+}

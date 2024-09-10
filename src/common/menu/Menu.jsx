@@ -9,7 +9,7 @@ export function Menu({isLogged}) {
             <nav className="navbar">
 
                 <div className="navbar-logo">
-                    <a href="#">
+                    <a href="/">
                         <img src="/public/logo.png" alt="Romería Viva" />
                     </a>
                 </div>
