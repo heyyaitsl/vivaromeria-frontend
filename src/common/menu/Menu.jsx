@@ -5,12 +5,12 @@ import { LoggedBar } from './LoggedBar'
 import { LogoutBar } from './LogoutBar'
 export function Menu({isLogged}) {
     return (
-        <header>
+        <header className='header'>
             <nav className="navbar">
 
                 <div className="navbar-logo">
                     <a href="/">
-                        <img src="/public/logo.png" alt="Romería Viva" />
+                        <img src="/logo.png" alt="Romería Viva" />
                     </a>
                 </div>
                 <SearchBar/>

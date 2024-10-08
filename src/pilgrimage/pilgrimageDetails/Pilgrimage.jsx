@@ -7,14 +7,15 @@ import axios from "axios";
 import { getHour } from "../../common/dateUtils";
 
 export function Pilgrimage({id}) {
-    const urlBase = "http://localhost:8080/pilgrimages";
+    const urlBase = import.meta.env.VITE_URL_BASE+"pilgrimages";
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
         loadPilgrimage();
-})
+},[])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);
+        console.log(result.data);
     }
 
     return(
@@ -22,7 +23,7 @@ export function Pilgrimage({id}) {
         <Stack spacing={2} component={"section"}>
         <Box sx={{display:"grid"}}>
 
-            <Typography align="center" variant="h1" color="secondary">{pilgrimage.name}</Typography>
+            <Typography className="title-pilgrimage" align="center" variant="h1" color="secondary">{pilgrimage.name}</Typography>
             <Box sx={{display:"flex", gap:2, justifyContent:"center"}}>
             <Typography align="center" variant="h5" color="primary">{getDate(pilgrimage.date)}</Typography>
             <img className="icons" src="/sombrero.png" alt="sombrero" />
@@ -33,7 +34,8 @@ export function Pilgrimage({id}) {
             </Box> 
             <Grid2 container spacing={2}>
                 <Grid2 size={6} sx={{textAlign:"center"}}>
-                <img  className="pilgrimage-img"src="https://acortar.link/B8si1U" alt="romeria"></img>
+                
+                <img  className="pilgrimage-img"src={pilgrimage.image ? "data:image/png;base64,"+pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
                 </Grid2>
                 <Grid2 size={6}>
                 <Box>

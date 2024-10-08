@@ -1,12 +1,12 @@
 import './PilgrimageListElement.css'
 import { getStatus, getStatusClass } from 'src/common/StatusUtils.jsx'
 import { getDate } from 'src/common/dateUtils'
-export function PilgrimageListElement({name, status, date, place}) {
+export function PilgrimageListElement({name, status, date, place, image}) {
     
 
     return (
         <section className='pilgrimage-element-list'>
-            <img className='pilgrimage-img-list' alt="imagen de ee" src="https://24ai.tech/es/wp-content/uploads/sites/5/2023/10/01_product_1_sdelat-kvadratnym-3-1.jpg" />
+            <img className='pilgrimage-img-list' alt="imagen de ee" src={image ? "data:image/png;base64,"+image : "/image-not-available.png"} />
             <div className='pilgrimage-info-list'> 
                 <div className='pilgrimage-title-list'>
                     <strong>{name}</strong>

@@ -6,7 +6,7 @@ import { PilgrimagePage } from '../../pages/PilgrimagePage';
 import { generatePath, useNavigate } from 'react-router-dom';
 
 export function PilgrimageList(){
-    const urlBase = "http://localhost:8080/pilgrimages";
+    const urlBase = import.meta.env.VITE_URL_BASE + 'pilgrimages';
         const[pilgrimages, setPilgrimages] = useState([]);
         useEffect(() => {
             loadPilgrimages();
@@ -28,7 +28,7 @@ export function PilgrimageList(){
         {pilgrimages.map((pilgrimage, id) => (
             <Link key={id} href={generatePath("/:id", {id: pilgrimage.id})} sx={{textDecoration:"none"}}>
             <PilgrimageListElement name={pilgrimage.name} place={pilgrimage.place}
-            date={pilgrimage.date} status={pilgrimage.status}/></Link>
+            date={pilgrimage.date} status={pilgrimage.status} image={pilgrimage.image}/></Link>
         ))}
         </>
     )

@@ -1,3 +1,8 @@
 .pilgrimage-img {
     box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
 }
+
+.title-pilgrimage{
+    -webkit-text-stroke:0.05rem;
+    -webkit-text-stroke-color:var(--blue);
+}
