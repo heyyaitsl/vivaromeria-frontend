@@ -7,6 +7,7 @@ import { PilgrimagePage } from './pages/PilgrimagePage.jsx'
 import { BuyTicketPage } from './pages/BuyTicketPage.jsx'
 import { CreatePilgrimage } from './pilgrimage/CreatePilgrimage.jsx'
 import { CreateFloats } from './floats/CreateFloats.jsx'
+import { LoginPage } from './pages/LoginPage.jsx'
 
 
 
@@ -26,6 +27,7 @@ export function App() {
       <Route path='/buyTicket/:idPilgrimage/:idFloat' element={<BuyTicketPage/>}></Route>
       <Route path='/createFloat' element={<CreateFloats/>}></Route>
       <Route path='/float/:id/edit' element={<CreateFloats/>}></Route>
+      <Route path='/login' element={<LoginPage/>}></Route>
       </Routes>
 
       </Container>
