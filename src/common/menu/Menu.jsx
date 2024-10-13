@@ -4,6 +4,7 @@ import { SearchBar } from './SearchBar'
 import { LoggedBar } from './LoggedBar'
 import { LogoutBar } from './LogoutBar'
 export function Menu({isLogged}) {
+    
     return (
         <header className='header'>
             <nav className="navbar">

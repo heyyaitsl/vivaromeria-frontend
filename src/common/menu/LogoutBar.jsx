@@ -1,7 +1,7 @@
 export function LogoutBar(){
     return (
         <div>
-            <button className='left-fields button-login'>Iniciar sesión/Registrarse</button>
+            <a href="/login" className='left-fields button-login'>Iniciar sesión/Registrarse</a>
         </div>
     )
 }

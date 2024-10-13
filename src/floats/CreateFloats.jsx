@@ -5,14 +5,15 @@ import dayjs from 'dayjs';
 import { Box, Button, Hidden, TextField, Typography } from "@mui/material";
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import "dayjs/locale/es";
-import { CloudUpload, Save } from '@mui/icons-material';
+import { Close, CloudUpload, Save } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 export function CreateFloats() {
     const urlBase = import.meta.env.VITE_URL_BASE + "floats";
+    const navigate = useNavigate();
     const {id} = useParams();
     const [floats, setFloats] = useState([]);
     useEffect(() => {
@@ -81,6 +82,7 @@ export function CreateFloats() {
         console.log('onSubmit');
         const response = await axios.post(urlBase, formData);
         console.log("Elemento guardado: ", response.data);
+        navigate('/manage-floats')
     }
 
     return (
@@ -103,8 +105,10 @@ export function CreateFloats() {
                         </Box>
                     </label>
                 </Box>
+                <Box sx={{display:"grid", gridTemplateColumns:'1fr 1fr', gap: '1rem'}}>
+                <Button variant="contained" color='error' component="a" href='/manage-floats' startIcon={<Close />}>Cancel</Button>
                 <Button variant="contained" color="primary" type='submit' component="button" startIcon={<Save />}>Guardar</Button>
-
+                </Box>
             </Box>
         </>
     )

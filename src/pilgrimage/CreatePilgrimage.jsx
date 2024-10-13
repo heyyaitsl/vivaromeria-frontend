@@ -2,21 +2,23 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
-import { Box, Button, Hidden, TextField, Typography } from "@mui/material";
+import { Box, Button, Hidden, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import "dayjs/locale/es";
-import { CloudUpload, Save } from '@mui/icons-material';
+import { Close, CloudUpload, Save } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 export function CreatePilgrimage() {
+    const token = localStorage.getItem('token'); 
     const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
-    const {id} = useParams();
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
-        if(id){loadPilgrimage();}
+        if (id) { loadPilgrimage(); }
     }, [])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
@@ -90,15 +92,29 @@ export function CreatePilgrimage() {
     const onSubmit = async (event) => {
         event.preventDefault();
         console.log('onSubmit');
-        const response = await axios.post(urlBase, formData);
+        console.log(formData.status);
+        const response = await axios.post(urlBase, formData, {headers: {
+            'Authorization': `Bearer ${token}` // Incluye el token en el header
+          }});
         console.log("Elemento guardado: ", response.data);
+        navigate('/manage-pilgrimages')
+
     }
 
     return (
         <>
             <Box component={"form"} onSubmit={onSubmit} sx={{ display: "flex", flexDirection: "column", maxWidth: "50rem", gap: "1rem" }}>
                 <TextField label="Nombre" name='name' value={formData.name} required onChange={handleInputChange} />
-
+                <Select
+                    label="Estado"
+                    name='status'
+                    value={formData.status}
+                    onChange={handleInputChange}
+                >
+                    <MenuItem value={1}>Realizado</MenuItem>
+                    <MenuItem value={2}>Cancelado</MenuItem>
+                    <MenuItem value={3}>Pendiente</MenuItem>
+                </Select>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es' >
                     <Box sx={{ display: "flex", gap: "1rem" }}>
                         <DatePicker label='Fecha' value={formData.date} onChange={handleDateChange} />
@@ -121,8 +137,10 @@ export function CreatePilgrimage() {
                         </Box>
                     </label>
                 </Box>
+                <Box sx={{display:"grid", gridTemplateColumns:'1fr 1fr', gap: '1rem'}}>
+                <Button variant="contained" color='error' component="a" href='/manage-pilgrimages' startIcon={<Close />}>Cancel</Button>
                 <Button variant="contained" color="primary" type='submit' component="button" startIcon={<Save />}>Guardar</Button>
-
+                </Box>
             </Box>
         </>
     )

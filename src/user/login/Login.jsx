@@ -12,9 +12,6 @@ export function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(urlBase);
-        console.log(username);
-            console.log(password);
         try {
             
             const response = await axios.post(urlBase, {
@@ -22,9 +19,13 @@ export function Login() {
             console.log(response.data);
 
             const token = response.data.token;
+            const user = response.data.username;
+            const role = response.data.role;
 
             // Almacenar el token en localStorage o sessionStorage
             localStorage.setItem('token', token);
+            localStorage.setItem('username', user);
+            localStorage.setItem('role', role);
 
             // Redirigir a una página protegida o home
             window.location.href = '/';
