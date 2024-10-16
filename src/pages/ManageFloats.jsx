@@ -1,5 +1,8 @@
 import { Container, Typography, Button } from '@mui/material';
 import { ManageFloatsList } from '../floats/ManageFloatsList';
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 export function ManageFloats() {
   return (
@@ -8,7 +11,7 @@ export function ManageFloats() {
         Mis carrozas
       </Typography>
       <ManageFloatsList/>
-      <Button variant="contained" color="primary" sx={{ mt: 2 }}  component='a' href='/floats/edit/'>
+      <Button component={Link} to='/floats/edit/' variant="contained" color="primary" sx={{ mt: 2 }}  >
         Añadir nueva carroza
       </Button>
     </Container>

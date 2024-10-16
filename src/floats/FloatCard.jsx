@@ -1,5 +1,7 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import "./Float.css"
+import { Link } from "react-router-dom";
+
 
 export function FloatCard({name, image, description, username, price, maxPeople, idPilgrimage, idFloat}) {
     return(
@@ -17,8 +19,7 @@ export function FloatCard({name, image, description, username, price, maxPeople,
                 <Typography variant="p" sx={{fontSize:"1.2rem", textAlign:"justify"}}> {description} </Typography>
              </CardContent>
              <CardActions sx={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
-        
-                <Button  href={"/buyticket/"+idPilgrimage+"/"+idFloat} variant="outlined" size="medium">Comprar entrada</Button>
+                <Button component={Link} to={"/buyticket/"+idPilgrimage+"/"+idFloat} variant="outlined" size="medium">Comprar entrada</Button>
                 <Typography variant="h4" color="primary" > {price} €</Typography>
     
              </CardActions>

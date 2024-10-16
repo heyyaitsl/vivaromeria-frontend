@@ -11,24 +11,18 @@ import { LoginPage } from './pages/LoginPage.jsx'
 import { useEffect, useState } from 'react'
 import { ManagePilgrimage } from './pages/ManagePilgrimage.jsx'
 import { ManageFloats } from './pages/ManageFloats.jsx'
+import { AuthProvider } from './AuthContext.jsx'
 
 
 
 export function App() {
-  const [isLogged, setIsLogged] = useState(false);
 
-  // Chequear si el usuario tiene token en el localStorage
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
 
   return (
     <>
     <Router>
-    <Menu isLogged={isLogged} />
+    <AuthProvider>
+    <Menu />
     <Container sx={{ mt:"var(--marginTop)" }}>
       <Routes>
      
@@ -38,13 +32,13 @@ export function App() {
       <Route path='/pilgrimage/edit/:id' element={<CreatePilgrimage/>}></Route>
       <Route path='/pilgrimage/edit' element={<CreatePilgrimage/>}></Route>
       <Route path='/:id' element={<PilgrimagePage/>}></Route>
-      <Route path='/buyTicket/:idPilgrimage/:idFloat' element={<BuyTicketPage isLogged={isLogged}/>}></Route>
+      <Route path='/buyTicket/:idPilgrimage/:idFloat' element={<BuyTicketPage/>}></Route>
       <Route path='/floats/edit/:id' element={<CreateFloats/>}></Route>
       <Route path='/floats/edit' element={<CreateFloats/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
       </Routes>
 
-      </Container>
+      </Container></AuthProvider>
       </Router>
     
     </>

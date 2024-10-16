@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IconButton, List, ListItem, ListItemText, Paper } from '@mui/material';
 import { EditIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function ManageFloatsList(){
     const urlBase = import.meta.env.VITE_URL_BASE + 'floats';
@@ -31,7 +32,7 @@ export function ManageFloatsList(){
                   <ListItem
                     key={float.id}
                     secondaryAction={
-                      <IconButton edge="end" aria-label="edit" component='a' href={'/floats/edit/'+float.id}>
+                      <IconButton edge="end" aria-label="edit" component={Link} to={'/floats/edit/'+float.id}>
                         <EditIcon />
                       </IconButton>
                     }

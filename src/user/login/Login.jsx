@@ -3,9 +3,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function Login({register}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "user/login";
+    const navigate = useNavigate();
+    const { logIn } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -26,9 +30,9 @@ export function Login({register}) {
             localStorage.setItem('token', token);
             localStorage.setItem('username', user);
             localStorage.setItem('role', role);
-
+            logIn();
             // Redirigir a una página protegida o home
-            window.location.href = '/';
+            navigate('/')
         } catch (error) {
             setError('Login failed. Please check your credentials.');
         }

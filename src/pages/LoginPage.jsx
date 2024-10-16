@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export function LoginPage() {
     const [register, setRegister] = useState(false)
+    
     const handleRegister = () => {
         setRegister(!register)
     }

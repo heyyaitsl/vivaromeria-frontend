@@ -1,30 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { FormTicket } from "../ticket/FormTicket";
 import { useEffect } from "react";
+import { useAuth } from "../AuthContext";
 
-export function BuyTicketPage({isLogged}) {
+export function BuyTicketPage() {
+    const { isLogged } = useAuth();
+
     const navigate = useNavigate();
     const {idPilgrimage, idFloat} = useParams();
-    console.log(isLogged);
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (!isLogged) {
-            console.log("estoy dentro")
-            //navigate('/login'); // Redirige al login si no está logueado
+            navigate('/login'); // Redirige al login si no está logueado
         }
-    }, [isLogged]); */
+    }, [isLogged]); 
 
     // Renderiza solo si el usuario está logueado
-    
+    if(!isLogged) {return null;}
     return(
         <>
         
-        {isLogged ? (
+        
             <FormTicket idPilgrimage={idPilgrimage} idFloat={idFloat}></FormTicket>
-            ) : 
-                navigate('/login')
             
-        }
         </>
     )
 }

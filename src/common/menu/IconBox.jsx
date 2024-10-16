@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Settings, Ticket, LogOut, Truck, MapPin } from 'lucide-react';
+import { useAuth } from '../../AuthContext';
 
 export function IconBox({closeMenu}) {
+  const { logOut } = useAuth();
     const role = localStorage.getItem('role');
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     window.location.href = '/login';
+    logOut();
   };
 
   return (
