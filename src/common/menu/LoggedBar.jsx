@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconBox } from "./IconBox";
+import axios from "axios";
 
 export function LoggedBar() {
     const [isIconBoxOpen, setIsIconBoxOpen] = useState(false);
 
+    const urlBase = import.meta.env.VITE_URL_BASE+"user/"+localStorage.getItem('username');
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+        loadUser();
+},[])
+    const loadUser = async () => {
+        const result = await axios.get(urlBase);
+        setUser(result.data);
+    }
   const toggleIconBox = () => {
     setIsIconBoxOpen(!isIconBoxOpen);
   };
@@ -15,7 +25,7 @@ export function LoggedBar() {
                 <div>
                     <div className="profile">
                     <button onClick={toggleIconBox} className="user-menu-button">
-                        <img className="profile-img" src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/e40b6ea6361a1abe28f32e7910f63b66/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt="Usuario" />
+                        <img className="profile-img" src={user.photo ? "data:image/png;base64,"+user.photo : "/image-not-available.png"} alt="Usuario" />
                         <img className={`icons user-menu-icon ${isIconBoxOpen ? 'open' : ''}`} src="/flecha-hacia-abajo-para-navegar.png" alt="opciones" />
                         </button>
                     </div>

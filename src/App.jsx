@@ -38,7 +38,7 @@ export function App() {
       <Route path='/pilgrimage/edit/:id' element={<CreatePilgrimage/>}></Route>
       <Route path='/pilgrimage/edit' element={<CreatePilgrimage/>}></Route>
       <Route path='/:id' element={<PilgrimagePage/>}></Route>
-      <Route path='/buyTicket/:idPilgrimage/:idFloat' element={<BuyTicketPage/>}></Route>
+      <Route path='/buyTicket/:idPilgrimage/:idFloat' element={<BuyTicketPage isLogged={isLogged}/>}></Route>
       <Route path='/floats/edit/:id' element={<CreateFloats/>}></Route>
       <Route path='/floats/edit' element={<CreateFloats/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>

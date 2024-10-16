@@ -1,9 +1,4 @@
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
-
-import { Box, Button, Hidden, TextField, Typography } from "@mui/material";
-import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { Box, Button, TextField, Typography } from "@mui/material";
 import "dayjs/locale/es";
 import { Close, CloudUpload, Save } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -14,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 export function CreateFloats() {
     const urlBase = import.meta.env.VITE_URL_BASE + "floats";
     const navigate = useNavigate();
+    const username= localStorage.getItem('username');
     const {id} = useParams();
     const [floats, setFloats] = useState([]);
     useEffect(() => {
@@ -28,7 +24,7 @@ export function CreateFloats() {
     const [formData, setFormData] = useState({
         id: '',
         name: '',
-        username: '',
+        username: username,
         price:'',
         description: '',
         maxPeople: '',
@@ -41,7 +37,7 @@ export function CreateFloats() {
             setFormData({
                 id: floats.id || '',
                 name: floats.name || '',
-                username: floats.username || '',
+                username: floats.username || username,
                 description: floats.description || '',
                 price: floats.price || '',
                 maxPeople: floats.maxPeople || '',
@@ -89,7 +85,7 @@ export function CreateFloats() {
         <>
             <Box component={"form"} onSubmit={onSubmit} sx={{ display: "flex", flexDirection: "column", maxWidth: "50rem", gap: "1rem" }}>
                 <TextField label="Nombre" name='name' value={formData.name} required onChange={handleInputChange} />
-                <TextField label="Propietario" name='username' value={formData.username} onChange={handleInputChange}  required/>
+                <TextField label="Propietario" name='username' value={formData.username}  disabled/>
                 <TextField label="Máximo personas" type='number' name='maxPeople' value={formData.maxPeople} onChange={handleInputChange} required />
                 <TextField label="Precio (en euros)" type='number' name='price' value={formData.price} onChange={handleInputChange} required/>
                 <TextField label="Descripción" slotProps={{ input: { inputProps: { maxLength: 500 } } }} helperText={`${formData.description.length}/900`} multiline rows={4} name='description' value={formData.description} onChange={handleInputChange} />

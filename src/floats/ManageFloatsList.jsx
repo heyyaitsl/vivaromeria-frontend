@@ -15,6 +15,8 @@ export function ManageFloatsList(){
             console.log(result.data);
             setFloats(result.data);
         }
+        const username = localStorage.getItem('username');
+        const filteredFloats = floats.filter(float => float.username === username);
 
 
 
@@ -25,7 +27,7 @@ export function ManageFloatsList(){
             <>
             <Paper elevation={3} style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
               <List>
-                {floats.map((float) => (
+                {filteredFloats.map((float) => (
                   <ListItem
                     key={float.id}
                     secondaryAction={

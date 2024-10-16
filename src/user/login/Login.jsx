@@ -4,7 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useState } from "react";
 import axios from "axios";
 
-export function Login() {
+export function Login({register}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "user/login";
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -54,7 +54,7 @@ export function Login() {
                     <Input onChange={(e) => setPassword(e.target.value)} required type="password"></Input>
                 </FormControl>
                 <Button type="submit" variant="contained">Iniciar sesión</Button>
-                <Button component="a" href="/register" color="secondary" variant="contained">Registrarse</Button>
+                <Button component='a' onClick={register} color="secondary" variant="contained">Registrarse</Button>
                 {error && <Box sx={{ color: "error.main" }}>{error}</Box>}
             </Box>
         </>

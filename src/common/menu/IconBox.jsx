@@ -15,13 +15,14 @@ export function IconBox({closeMenu}) {
     <div className="icon-box">
       <ul>
         
-          {role === 'ROLE_ADMIN' &&(<>
+          {role === 'ROLE_FLOATS' &&(<>
         <li>
           <Link to="/manage-floats" onClick={closeMenu}>
             <Truck className="icon-box-icon" />
             Gestionar Carrozas
           </Link>
-        </li>
+        </li></>)}
+        {role === 'ROLE_ADMIN' &&(<>
         <li>
           <Link to="/manage-pilgrimages" onClick={closeMenu}>
             <MapPin className="icon-box-icon" />
