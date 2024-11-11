@@ -5,7 +5,6 @@ import { useAuth } from "../AuthContext";
 
 export function BuyTicketPage() {
     const { isLogged } = useAuth();
-
     const navigate = useNavigate();
     const {idPilgrimage, idFloat} = useParams();
 

@@ -39,7 +39,7 @@ export function IconBox({closeMenu}) {
           </Link>
         </li>
         <li>
-        <Link to="/" onClick={closeMenu}>
+        <Link to="/myTickets" onClick={closeMenu}>
             <Ticket className="icon-box-icon" />
             Ver entradas
           </Link>

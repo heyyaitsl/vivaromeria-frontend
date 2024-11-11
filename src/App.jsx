@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { ManagePilgrimage } from './pages/ManagePilgrimage.jsx'
 import { ManageFloats } from './pages/ManageFloats.jsx'
 import { AuthProvider } from './AuthContext.jsx'
+import { MyTicketsPage } from './pages/MyTicketsPage.jsx'
 
 
 
@@ -23,7 +24,7 @@ export function App() {
     <Router>
     <AuthProvider>
     <Menu />
-    <Container sx={{ mt:"var(--marginTop)" }}>
+    <Container sx={{ mt:"var(--marginTop)", mb:"2rem" }}>
       <Routes>
      
       <Route path='/' element={<Home/>}></Route>
@@ -36,10 +37,13 @@ export function App() {
       <Route path='/floats/edit/:id' element={<CreateFloats/>}></Route>
       <Route path='/floats/edit' element={<CreateFloats/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
+      <Route path='/myTickets' element={<MyTicketsPage/>}></Route>
       </Routes>
 
       </Container></AuthProvider>
+
       </Router>
+      
     
     </>
 

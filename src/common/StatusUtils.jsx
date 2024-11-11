@@ -1,8 +1,8 @@
 export function getStatus(num) {
     const status={
-        1: 'Realizado',
-        2: 'Cancelado',
-        3: 'Pendiente'
+        1: 'Finalizada',
+        2: 'Cancelada',
+        3: 'Próximamente'
     }
 
     return status[num] || 'Desconocido';

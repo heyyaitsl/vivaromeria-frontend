@@ -33,3 +33,35 @@ html {
 img{
   max-width: 100%;
 }
+
+.pilgrimage-status {
+  padding: 0.4rem 0.6rem;
+  border-radius: 1rem;
+
+}
+.pilgrimage-img-list{
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  
+}
+
+.status-completed {
+  background-color: #9ef29e;
+  color: #154b15; /* Asegura que el texto sea legible */
+}
+
+.status-canceled {
+  background-color: #ff7d7d;
+  color: #571515;
+}
+
+.status-pending {
+  background-color: #fff199;
+  color: #514918;
+}
+
+.status-unknown {
+  background-color: gray;
+  color: white;
+}
