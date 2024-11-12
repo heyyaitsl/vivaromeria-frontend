@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Logo from '../Logo.jsx'
 import { LoggedBar } from './LoggedBar.jsx';
