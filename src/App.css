@@ -65,3 +65,11 @@ a, a:hover, a:visited, a:active {
   border: 1px solid #fff;
 }
 
+
+/** List pilgrimage**/
+.pilgrimage-img-list{
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  
+}

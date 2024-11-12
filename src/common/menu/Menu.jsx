@@ -10,6 +10,7 @@ import { LoggedBar } from './LoggedBar.jsx';
 import { useAuth } from '../../AuthContext.jsx';
 import { LogoutBar } from './LogoutBar.jsx';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,9 +50,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export function Menu() {
+export function Menu({filter}) {
   const { isLogged } = useAuth();
-
+  const [inputText, setInputText] = useState("");
+  let inputHandler = (e) => {
+    var lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
+  }
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      filter(inputText);
+    }
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -71,6 +81,8 @@ export function Menu() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={inputHandler}
+              onKeyDown={handleKeyDown}
             />
           </Search>
           {isLogged

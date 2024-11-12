@@ -1,9 +1,9 @@
 import { PilgrimageList } from "../pilgrimage/pilgrimageList/PilgrimageList";
 
-export function Home() {
+export function Home({filter}) {
     return(
         <>
-        <PilgrimageList/>
+        <PilgrimageList filter={filter}/>
         </>
     )
 }

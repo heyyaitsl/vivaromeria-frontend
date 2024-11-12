@@ -12,21 +12,22 @@ import { ManagePilgrimage } from './pages/ManagePilgrimage.jsx'
 import { ManageFloats } from './pages/ManageFloats.jsx'
 import { AuthProvider } from './AuthContext.jsx'
 import { MyTicketsPage } from './pages/MyTicketsPage.jsx'
+import { useState } from 'react'
 
 
 
 export function App() {
-
+  const [search, setSearch] = useState('');
 
   return (
     <>
     <Router>
     <AuthProvider>
-    <Menu/>
+    <Menu filter={setSearch}/>
     <Container sx={{ mt:"var(--marginTop)", mb:"2rem" }}>
       <Routes>
      
-      <Route path='/' element={<Home/>}></Route>
+      <Route path='/' element={<Home filter={search} />}></Route>
       <Route path='/manage-pilgrimages' element={<ManagePilgrimage/>}></Route>
       <Route path='/manage-floats' element={<ManageFloats/>}></Route>
       <Route path='/pilgrimage/edit/:id' element={<CreatePilgrimage/>}></Route>
