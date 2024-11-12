@@ -1,5 +1,6 @@
 import './App.css'
 import { Menu } from './common/menu/Menu.jsx'
+import { MenuV2 } from './common/menu/MenuV2.jsx'
 import { Box, Container } from '@mui/material'
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 import { Home } from './pages/Home.jsx'
@@ -23,7 +24,7 @@ export function App() {
     <>
     <Router>
     <AuthProvider>
-    <Menu />
+    <MenuV2 />
     <Container sx={{ mt:"var(--marginTop)", mb:"2rem" }}>
       <Routes>
      

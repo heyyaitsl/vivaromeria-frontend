@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getDate } from 'src/common/dateUtils'
 import { getStatus, getStatusClass } from 'src/common/StatusUtils.jsx'
 import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export function PilgrimageList(){
     const urlBase = import.meta.env.VITE_URL_BASE + 'pilgrimages';
@@ -60,9 +61,9 @@ export function PilgrimageList(){
                       const value = column.id==='date' ? getDate(pilgrimage[column.id]) : 
                       column.id==='status' ? getStatus(pilgrimage[column.id]) : pilgrimage[column.id];
                       return (
-                        <TableCell key={column.id} >
+                        <TableCell key={column.id} > <Link to={"/"+pilgrimage.id}  style={{ textDecoration: "none" }}>
                           <span className={ column.id==='status' ? `pilgrimage-status ${getStatusClass(pilgrimage[column.id])}` : ''}>
-                            {column.id === 'image' ? img(value) : value}</span>
+                            {column.id === 'image' ? img(value) : value}</span></Link>
                           
                         </TableCell>
                       );

@@ -1,39 +1,4 @@
-:root {
-  --blue: #4585E4;
-  --yellow: #FFF500;
-  --white: #FFFFFF;
-  --lightBlue:#CEE2FF;
-  --menuBlue: #9EBFF1; 
-  --lightYellow: #FFFEDB;
-  --navbarHeight:9rem;
-  --marginTop:10rem
-}
-
-
-html {
-  box-sizing: border-box;
-  font-size: 62.5%; /* 1 rem = 10px */    
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-.container{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-}
-
-.icons{
-    height: 1.5rem;
-    width: 1.5rem;
-    cursor: pointer;
-}
-img{
-  max-width: 100%;
-}
-
+/**Status pilgrimage**/
 .pilgrimage-status {
   padding: 0.4rem 0.6rem;
   border-radius: 1rem;
@@ -48,7 +13,7 @@ img{
 
 .status-completed {
   background-color: #9ef29e;
-  color: #154b15; /* Asegura que el texto sea legible */
+  color: #154b15; 
 }
 
 .status-canceled {
@@ -65,3 +30,24 @@ img{
   background-color: gray;
   color: white;
 }
+
+/**Menu **/
+
+
+.menu-modal li{
+  display: flex;
+  gap: 1rem;
+  padding:0.5rem 1.5rem;
+  padding-top: 0rem;
+  margin:0;
+ 
+}
+.menu-modal li:first-child{
+  padding-top: 0.5rem;
+}
+
+.menu-modal ul{
+  padding: 0;
+  margin: 0;
+}
+

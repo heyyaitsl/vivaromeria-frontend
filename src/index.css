@@ -1,0 +1,33 @@
+:root {
+    --blue: #4585E4;
+    --yellow: #FFF500;
+    --white: #FFFFFF;
+    --lightBlue:#CEE2FF;
+    --menuBlue: #9EBFF1; 
+    --lightYellow: #FFFEDB;
+    --navbarHeight:9rem;
+    --marginTop:2rem
+  }
+
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%; /* 1 rem = 10px */    
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+.finger-paint-regular {
+    font-family: "Finger Paint", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.color-white{
+    color: var(--white);
+}
+.color-yellow{
+    color: var(--yellow);
+}
+  
