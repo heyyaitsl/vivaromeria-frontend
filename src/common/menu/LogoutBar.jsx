@@ -1,4 +1,4 @@
-import { AppRegistration, Login, Person, Person2, PersonOutline } from "@mui/icons-material";
+import { Login, PersonOutline } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 

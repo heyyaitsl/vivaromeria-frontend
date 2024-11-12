@@ -1,15 +1,13 @@
 import './App.css'
 import { Menu } from './common/menu/Menu.jsx'
-import { MenuV2 } from './common/menu/MenuV2.jsx'
-import { Box, Container } from '@mui/material'
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
+import { Container } from '@mui/material'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Home } from './pages/Home.jsx'
 import { PilgrimagePage } from './pages/PilgrimagePage.jsx'
 import { BuyTicketPage } from './pages/BuyTicketPage.jsx'
 import { CreatePilgrimage } from './pilgrimage/CreatePilgrimage.jsx'
 import { CreateFloats } from './floats/CreateFloats.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
-import { useEffect, useState } from 'react'
 import { ManagePilgrimage } from './pages/ManagePilgrimage.jsx'
 import { ManageFloats } from './pages/ManageFloats.jsx'
 import { AuthProvider } from './AuthContext.jsx'
@@ -24,7 +22,7 @@ export function App() {
     <>
     <Router>
     <AuthProvider>
-    <MenuV2 />
+    <Menu/>
     <Container sx={{ mt:"var(--marginTop)", mb:"2rem" }}>
       <Routes>
      

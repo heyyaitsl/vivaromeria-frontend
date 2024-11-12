@@ -6,20 +6,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 
 export function LoggedBar() {
-    const [isIconBoxOpen, setIsIconBoxOpen] = useState(false);
-
     const urlBase = import.meta.env.VITE_URL_BASE+"user/"+localStorage.getItem('username');
     const [user, setUser] = useState([]);
     useEffect(() => {
-        loadUser();
-},[])
+        loadUser(); },[])
     const loadUser = async () => {
         const result = await axios.get(urlBase);
         setUser(result.data);
     }
-  const toggleIconBox = () => {
-    setIsIconBoxOpen(!isIconBoxOpen);
-  };
 
   const [anchorEl, setAnchorEl] = useState(null);
 
