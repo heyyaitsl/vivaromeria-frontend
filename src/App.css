@@ -58,10 +58,6 @@ a, a:hover, a:visited, a:active {
 }
 
 .profile-img {
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-  object-fit: cover;
   border: 1px solid #fff;
 }
 

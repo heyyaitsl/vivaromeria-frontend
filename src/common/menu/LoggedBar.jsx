@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, AgricultureOutlined, ConfirmationNumberOutlined, KeyboardArrowDown, LogoutOutlined, SettingsOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
@@ -65,17 +65,8 @@ export function LoggedBar() {
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent:'end' }} onClick={handleProfileMenuOpen}>
-            {user.photo ? <img className="profile-img" src={"data:image/png;base64,"+user.photo} alt="Usuario" /> :
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>}
+            <Avatar className="profile-img" src={"data:image/png;base64,"+user.photo} alt="Usuario" ></Avatar>
+            
             <IconButton
               size="large"
               aria-label="show more"

@@ -113,63 +113,12 @@ export function Pilgrimage({ id }) {
                         </Card>
                     </Stack>
                     <Stack spacing={1}>
-                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas </Typography>
+                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas disponibles </Typography>
                         <FloatList id={id}/>
                     </Stack>
                 </Stack>
             </Container>
 
-            <Stack spacing={2} component={"section"}>
-                <Box sx={{ display: "grid" }}>
-
-                    <Typography className="title-pilgrimage" align="center" variant="h1" color="secondary">{pilgrimage.name}</Typography>
-                    {role == "ROLE_FLOATS" ? (
-                        <>
-                            <Box component="form" sx={{ display: "flex", gap: 2, maxWidth: 400, margin: 'auto' }} onSubmit={onSubmit}>
-                                <Box>
-                                    <InputLabel id="floats-select-label">Selecciona una carroza</InputLabel>
-                                    <Select
-                                        labelId="floats-select-label"
-                                        value={selectedFloat}
-                                        label="Selecciona una carroza"
-                                        onChange={(e) => setSelectedFloat(e.target.value)}
-                                        required
-                                    >
-                                        {filteredFloats.map((floatItem) => (
-                                            <MenuItem key={floatItem.id} value={floatItem.id}>
-                                                {floatItem.name} {/* O cualquier propiedad relevante de float */}
-                                            </MenuItem>
-                                        ))}
-                                    </Select></Box>
-
-                                <Button variant='outlined' type="submit">Añadir carroza</Button>
-                            </Box></>
-
-                    ) : null}
-
-                    <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
-                        <Typography align="center" variant="h5" color="primary">{getDate(pilgrimage.date)}</Typography>
-
-                        <img className="icons" src="/sombrero.png" alt="sombrero" />
-                        <Typography align="center" variant="h5" color="primary">{pilgrimage.place}</Typography>
-                        <img className="icons" src="/sombrero.png" alt="sombrero" />
-                        <Typography align="center" variant="h5" color="primary">{getHour(pilgrimage.date)}</Typography>
-                    </Box>
-                </Box>
-                <Grid2 container spacing={2}>
-                    <Grid2 size={6} sx={{ textAlign: "center" }}>
-
-                        <img className="pilgrimage-img" src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
-                    </Grid2>
-                    <Grid2 size={6}>
-                        <Box>
-                            <Typography variant="p">{pilgrimage.description}</Typography>
-                        </Box>
-                    </Grid2>
-
-                </Grid2>
-
-            </Stack>
         </>
     )
 }

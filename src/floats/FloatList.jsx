@@ -15,6 +15,8 @@ export function FloatList({id}) {
         setFloat(result.data);
     }
 
+
+
     return(
 
         <>

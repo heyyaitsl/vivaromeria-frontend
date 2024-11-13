@@ -10,7 +10,6 @@ export function PilgrimagePage() {
             
                 <Box sx={{display:"grid", gap:3}}>
                     <Pilgrimage id={id} />
-                    <FloatList id={id}/>
                 </Box>
         </>
     )
