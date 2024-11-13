@@ -18,13 +18,13 @@ export function FloatList({id}) {
     return(
 
         <>
-        <Box sx={{display:"flex", gap:"1rem"}}>
+        <Stack spacing={1}>
         {floats.map((float, idKey) => (
 
         <FloatCard key={idKey} name={float.name} description={float.description} username={float.username}
          price={float.price} image={float.image} maxPeople={float.maxPeople} idFloat={float.id} idPilgrimage={id}/>
  ))}
-        </Box>
+        </Stack>
         </>
     )
 }

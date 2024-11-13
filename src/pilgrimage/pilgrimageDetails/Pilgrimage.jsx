@@ -1,100 +1,175 @@
-import { Box, Button, Container, Grid2, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardContent, Container, Grid2, InputLabel, MenuItem, Rating, Select, Stack, Typography } from "@mui/material"
 import './Pilgrimage.css'
 import { useParams } from "react-router-dom";
 import { getDate } from 'src/common/dateUtils'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getHour } from "../../common/dateUtils";
+import { AccessTimeOutlined, CalendarTodayOutlined, LanguageOutlined, PlaceOutlined } from "@mui/icons-material";
+import { FloatList } from "../../floats/FloatList";
 
-export function Pilgrimage({id}) {
+export function Pilgrimage({ id }) {
     const role = localStorage.getItem('role');
-    const urlBase = import.meta.env.VITE_URL_BASE+"pilgrimages";
-    const urlBaseFloats = import.meta.env.VITE_URL_BASE+"floats";
+    const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
+    const urlBaseFloats = import.meta.env.VITE_URL_BASE + "floats";
+    const urlBaseComments = import.meta.env.VITE_URL_BASE + "comments";
 
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
         loadPilgrimage();
-},[])
+    }, [])
+    const [comments, setComments] = useState([]);
+    useEffect(() => {
+        loadComments();
+    }, [])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);
         console.log(result.data);
     }
+    const loadComments = async () => {
+        const result = await axios.get(`${urlBaseComments}/pilgrimage/${id}`)
+        setComments(result.data);
+        console.log(result.data);
+    }
     const [floats, setFloats] = useState([]);
     useEffect(() => {
-        loadFloats()},[])
-    const loadFloats = async() => {
+        loadFloats()
+    }, [])
+    const loadFloats = async () => {
         const result = await axios.get(`${urlBaseFloats}`);
         console.log(result.data);
         setFloats(result.data);
     }
     const username = localStorage.getItem('username');
-        const filteredFloats = floats.filter(float => float.username === username);
+    const filteredFloats = floats.filter(float => float.username === username);
 
-        const [selectedFloat, setSelectedFloat] = useState('');
-    
+    const [selectedFloat, setSelectedFloat] = useState('');
 
-        const onSubmit = async (e) => {
-            e.preventDefault();
-                    
-              const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`);
-              console.log(response.data);
-              
-          };
 
-    return(
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`);
+        console.log(response.data);
+
+    };
+
+    return (
         <>
-        <Stack spacing={2} component={"section"}>
-        <Box sx={{display:"grid"}}>
+            <Container >
+                <Stack spacing={3}>
+                    <img className="pilgrimage-details-img" src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
+                    <Stack spacing={1}>
+                        <Typography sx={{ fontWeight: "600" }} variant="h3"> {pilgrimage.name}</Typography>
+                        <Stack sx={{opacity:'90%'}} direction="row" spacing={2}>
+                            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
+                                <CalendarTodayOutlined />
+                                <Typography variant="h5">{getDate(pilgrimage.date)}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
 
-            <Typography className="title-pilgrimage" align="center" variant="h1" color="secondary">{pilgrimage.name}</Typography>
-            {role == "ROLE_FLOATS" ? (
-                <>
-                <Box component="form" sx={{ display: "flex", gap: 2, maxWidth: 400, margin: 'auto' }} onSubmit={onSubmit}>
-                    <Box>
-                    <InputLabel id="floats-select-label">Selecciona una carroza</InputLabel>
-      <Select
-        labelId="floats-select-label"
-        value={selectedFloat}
-        label="Selecciona una carroza"
-        onChange={(e) => setSelectedFloat(e.target.value)}
-        required
-      >
-        {filteredFloats.map((floatItem) => (
-          <MenuItem key={floatItem.id} value={floatItem.id}>
-            {floatItem.name} {/* O cualquier propiedad relevante de float */}
-          </MenuItem>
-        ))}
-      </Select></Box>
-      
-                <Button variant='outlined' type="submit">Añadir carroza</Button>
-                </Box></>
-                
-                ) : null}
+                                <AccessTimeOutlined />
+                                <Typography variant="h5">{getHour(pilgrimage.date)}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
 
-            <Box sx={{display:"flex", gap:2, justifyContent:"center"}}>
-            <Typography align="center" variant="h5" color="primary">{getDate(pilgrimage.date)}</Typography>
-            
-            <img className="icons" src="/sombrero.png" alt="sombrero" />
-            <Typography align="center" variant="h5" color="primary">{pilgrimage.place}</Typography>
-            <img className="icons" src="/sombrero.png" alt="sombrero" />
-            <Typography align="center" variant="h5" color="primary">{getHour(pilgrimage.date)}</Typography>
-            </Box>
-            </Box> 
-            <Grid2 container spacing={2}>
-                <Grid2 size={6} sx={{textAlign:"center"}}>
-                
-                <img  className="pilgrimage-img"src={pilgrimage.image ? "data:image/png;base64,"+pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
-                </Grid2>
-                <Grid2 size={6}>
-                <Box>
-                    <Typography variant="p">{pilgrimage.description}</Typography>
+                                <PlaceOutlined />
+                                <Typography variant="h5">{pilgrimage.place}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
+
+                                <LanguageOutlined />
+                                <Typography color="primary" variant="h5"><a href={pilgrimage.url}>Sitio web oficial</a></Typography>
+                            </Box>
+                           
+
+                        </Stack>
+                        
+                    </Stack>
+                    <Stack spacing={1}>
+                    <Typography sx={{ fontWeight: "600" }} variant="h4"> Descripción</Typography>
+                    <Typography sx={{opacity:'90%'}} variant="h5">{pilgrimage.description}</Typography>
+                    </Stack>
+                    <Stack spacing={1}>
+                    <Typography sx={{ fontWeight: "600" }} variant="h4"> Ruta</Typography>
+                    <Typography sx={{opacity:'90%'}} variant="h5">{pilgrimage.route}</Typography>
+                    </Stack>
+
+                    <Stack spacing={1}>
+                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Comentarios </Typography>
+                        <Card >
+                                <CardContent sx={{display:'flex',  gap:'1rem'}}>
+
+                                <Avatar></Avatar>
+                                <Stack spacing={0.5}>
+                                <Box sx={{display:'flex', justifyContent:'space-between'}}>
+                                <Typography sx={{ fontWeight: "600" }} variant="h6">Ana Santana</Typography>
+                                <Rating name="read-only" value='3' readOnly /></Box>
+                                <Typography sx={{opacity:'80%'}} variant="p">20 de noviembre de 2023</Typography>
+                                <Typography sx={{textAlign:"justify"}} variant="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tempus mi. Quisque feugiat quam magna. Morbi neque nisl, tincidunt vel ex vitae, efficitur volutpat sem. Morbi dictum iaculis egestas. Proin dignissim blandit nunc eu scelerisque. Donec rutrum lorem eu augue congue, non mollis arcu auctor. Curabitur ultrices sem ut metus porttitor cursus. Nulla eget dui est. Aliquam erat volutpat.</Typography>
+                                </Stack>
+                                </CardContent>
+                        </Card>
+                    </Stack>
+                    <Stack spacing={1}>
+                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas </Typography>
+                        <FloatList id={id}/>
+                    </Stack>
+                </Stack>
+            </Container>
+
+            <Stack spacing={2} component={"section"}>
+                <Box sx={{ display: "grid" }}>
+
+                    <Typography className="title-pilgrimage" align="center" variant="h1" color="secondary">{pilgrimage.name}</Typography>
+                    {role == "ROLE_FLOATS" ? (
+                        <>
+                            <Box component="form" sx={{ display: "flex", gap: 2, maxWidth: 400, margin: 'auto' }} onSubmit={onSubmit}>
+                                <Box>
+                                    <InputLabel id="floats-select-label">Selecciona una carroza</InputLabel>
+                                    <Select
+                                        labelId="floats-select-label"
+                                        value={selectedFloat}
+                                        label="Selecciona una carroza"
+                                        onChange={(e) => setSelectedFloat(e.target.value)}
+                                        required
+                                    >
+                                        {filteredFloats.map((floatItem) => (
+                                            <MenuItem key={floatItem.id} value={floatItem.id}>
+                                                {floatItem.name} {/* O cualquier propiedad relevante de float */}
+                                            </MenuItem>
+                                        ))}
+                                    </Select></Box>
+
+                                <Button variant='outlined' type="submit">Añadir carroza</Button>
+                            </Box></>
+
+                    ) : null}
+
+                    <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+                        <Typography align="center" variant="h5" color="primary">{getDate(pilgrimage.date)}</Typography>
+
+                        <img className="icons" src="/sombrero.png" alt="sombrero" />
+                        <Typography align="center" variant="h5" color="primary">{pilgrimage.place}</Typography>
+                        <img className="icons" src="/sombrero.png" alt="sombrero" />
+                        <Typography align="center" variant="h5" color="primary">{getHour(pilgrimage.date)}</Typography>
+                    </Box>
                 </Box>
+                <Grid2 container spacing={2}>
+                    <Grid2 size={6} sx={{ textAlign: "center" }}>
+
+                        <img className="pilgrimage-img" src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
+                    </Grid2>
+                    <Grid2 size={6}>
+                        <Box>
+                            <Typography variant="p">{pilgrimage.description}</Typography>
+                        </Box>
+                    </Grid2>
+
                 </Grid2>
 
-            </Grid2>
-        
-        </Stack>
+            </Stack>
         </>
     )
 }
