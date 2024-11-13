@@ -78,3 +78,10 @@ a, a:hover, a:visited, a:active {
 .max-height-img{
   max-height: 30rem;
 }
+
+.box-hover:hover{
+  background-color: #e3e3e3;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+

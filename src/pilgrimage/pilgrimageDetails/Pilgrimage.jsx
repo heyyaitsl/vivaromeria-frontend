@@ -1,18 +1,22 @@
-import { Avatar, Box, Button, Card, CardContent, Container, Grid2, InputLabel, MenuItem, Rating, Select, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardContent, Container, Fab, Grid2, InputLabel, MenuItem, Modal, Rating, Select, Stack, Typography } from "@mui/material"
 import './Pilgrimage.css'
 import { useParams } from "react-router-dom";
 import { getDate } from 'src/common/dateUtils'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getHour } from "../../common/dateUtils";
-import { AccessTimeOutlined, CalendarTodayOutlined, LanguageOutlined, PlaceOutlined } from "@mui/icons-material";
+import { AccessTimeOutlined, Add, CalendarTodayOutlined, LanguageOutlined, PlaceOutlined } from "@mui/icons-material";
 import { FloatList } from "../../floats/FloatList";
+import { SelectFloat } from "../../floats/SelectFloat";
 
 export function Pilgrimage({ id }) {
     const role = localStorage.getItem('role');
     const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
     const urlBaseFloats = import.meta.env.VITE_URL_BASE + "floats";
     const urlBaseComments = import.meta.env.VITE_URL_BASE + "comments";
+    const [openModalFloat, setOpenModalFloat] = useState(false);
+    const handleModalFloatOpen = () => setOpenModalFloat(true);
+    const handleModalFloatClose = () => setOpenModalFloat(false);
 
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
@@ -21,7 +25,7 @@ export function Pilgrimage({ id }) {
     const [comments, setComments] = useState([]);
     useEffect(() => {
         loadComments();
-    }, [])
+    }, [openModalFloat])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);
@@ -33,6 +37,15 @@ export function Pilgrimage({ id }) {
         console.log(result.data);
     }
     const [floats, setFloats] = useState([]);
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`);
+        console.log(response.data);
+        handleModalFloatClose();
+        reloadComponent();
+
+    };
     useEffect(() => {
         loadFloats()
     }, [])
@@ -46,14 +59,12 @@ export function Pilgrimage({ id }) {
 
     const [selectedFloat, setSelectedFloat] = useState('');
 
+    const [key, setKey] = useState(0);
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-
-        const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`);
-        console.log(response.data);
-
-    };
+  const reloadComponent = () => {
+    setKey(prevKey => prevKey + 1);
+  };
+    
 
     return (
         <>
@@ -105,7 +116,7 @@ export function Pilgrimage({ id }) {
                                 <Stack spacing={0.5}>
                                 <Box sx={{display:'flex', justifyContent:'space-between'}}>
                                 <Typography sx={{ fontWeight: "600" }} variant="h6">Ana Santana</Typography>
-                                <Rating name="read-only" value='3' readOnly /></Box>
+                                <Rating name="read-only" value={3} readOnly /></Box>
                                 <Typography sx={{opacity:'80%'}} variant="p">20 de noviembre de 2023</Typography>
                                 <Typography sx={{textAlign:"justify"}} variant="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tempus mi. Quisque feugiat quam magna. Morbi neque nisl, tincidunt vel ex vitae, efficitur volutpat sem. Morbi dictum iaculis egestas. Proin dignissim blandit nunc eu scelerisque. Donec rutrum lorem eu augue congue, non mollis arcu auctor. Curabitur ultrices sem ut metus porttitor cursus. Nulla eget dui est. Aliquam erat volutpat.</Typography>
                                 </Stack>
@@ -113,8 +124,17 @@ export function Pilgrimage({ id }) {
                         </Card>
                     </Stack>
                     <Stack spacing={1}>
+                        <Box sx={{display:'flex', gap:'1rem', alignItems:'center'}}>
                         <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas disponibles </Typography>
-                        <FloatList id={id}/>
+                        {role =='ROLE_FLOATS' ? <>
+                        <Fab size='small' color="primary" aria-label="add" onClick={handleModalFloatOpen}>
+                            <Add />
+                            </Fab>
+                            <Modal open={openModalFloat} onClose={handleModalFloatClose}
+                            >
+                            <SelectFloat floats={filteredFloats} selectFloat={setSelectedFloat} onSubmit={onSubmit} />
+                            </Modal></> : <></>}</Box>
+                        <FloatList key={key} id={id}/>
                     </Stack>
                 </Stack>
             </Container>
