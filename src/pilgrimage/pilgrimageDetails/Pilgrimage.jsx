@@ -25,7 +25,7 @@ export function Pilgrimage({ id }) {
     const [comments, setComments] = useState([]);
     useEffect(() => {
         loadComments();
-    }, [openModalFloat])
+    }, [])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);

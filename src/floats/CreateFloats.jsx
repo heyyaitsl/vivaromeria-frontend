@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Modal, TextField, Typography } from "@mui/material";
 import "dayjs/locale/es";
 import { Close, CloudUpload, Save } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -6,19 +6,35 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-export function CreateFloats() {
+export function CreateFloats({open, close, reload, id}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "floats";
-    const navigate = useNavigate();
     const username= localStorage.getItem('username');
-    const {id} = useParams();
     const [floats, setFloats] = useState([]);
+    const [title, setTitle] = useState("Añadir carroza");
+    const [imageName, setImageName] = useState("No ha seleccionado ninguna imagen");
+
+
     useEffect(() => {
-        if(id){loadFloats();}
-    }, [])
+        if(id){loadFloats();}else{setFloats([]);}
+    }, [id])
     const loadFloats = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setFloats(result.data);
+        setTitle("Editar carroza")
         console.log(result.data);
+    }
+
+    const loadFormData = () =>{
+        setFormData({
+            id: '',
+            name: '',
+            username: username,
+            price:'',
+            description: '',
+            maxPeople: '',
+            image: '',
+            pilgrimages: {} 
+        })
     }
 
     const [formData, setFormData] = useState({
@@ -29,8 +45,9 @@ export function CreateFloats() {
         description: '',
         maxPeople: '',
         image: '',
-        pilgrimages: ''
+        pilgrimages: {}
     });
+
 
     useEffect(() => {
         if (floats) { // Solo actualiza si floats no es null
@@ -42,18 +59,20 @@ export function CreateFloats() {
                 price: floats.price || '',
                 maxPeople: floats.maxPeople || '',
                 image: floats.image || '',
-                pilgrimages: floats.pilgrimages || ''
+                pilgrimages: floats.pilgrimages || {}
             });
-        }
+            setImageName(floats.image? "Imagen seleccionada" : "No se ha seleccionado ninguna imagen");
+        }else{
+            loadFormData();}
     }, [floats]);
 
-    const [imageName, setImageName] = useState("No ha seleccionado ninguna imagen");
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevState => ({
             ...prevState,
             [name]: value,
+            
         })))
     };
 
@@ -78,34 +97,62 @@ export function CreateFloats() {
         console.log('onSubmit');
         const response = await axios.post(urlBase, formData);
         console.log("Elemento guardado: ", response.data);
-        navigate('/manage-floats')
+        close();
+        reload();
+        loadFormData();
     }
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 700,
+        height: 500,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+      };
     return (
-        <>
-            <Box component={"form"} onSubmit={onSubmit} sx={{ display: "flex", flexDirection: "column", maxWidth: "50rem", gap: "1rem" }}>
-                <TextField label="Nombre" name='name' value={formData.name} required onChange={handleInputChange} />
-                <TextField label="Propietario" name='username' value={formData.username}  disabled/>
-                <TextField label="Máximo personas" type='number' name='maxPeople' value={formData.maxPeople} onChange={handleInputChange} required />
-                <TextField label="Precio (en euros)" type='number' name='price' value={formData.price} onChange={handleInputChange} required/>
-                <TextField label="Descripción" slotProps={{ input: { inputProps: { maxLength: 500 } } }} helperText={`${formData.description.length}/900`} multiline rows={4} name='description' value={formData.description} onChange={handleInputChange} />
+        <>  
+              <Modal open={open} onClose={close}>
+
+        <Card style={style}>
+        <Box sx={{backgroundColor: "var(--blue)"}}>
+            <Typography sx={{ padding: '2rem',color:'white'}}variant='h4'>{title}</Typography>
+
+            </Box>
+            <CardContent sx={{overflow:'scroll', height: 450, display:'flex', flexDirection:'column', gap:'1rem'}}>
+            <Box component={"form"} onSubmit={onSubmit} sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <Box sx={{ display: "flex", gap: "1rem"}}>
+                <TextField sx={{flexGrow:'0.5'}} label="Nombre" name='name' value={formData.name} required onChange={handleInputChange} />
+                <TextField sx={{flexGrow:'0.5'}} label="Propietario" name='username' value={formData.username}  disabled/></Box>
+                <Box sx={{ display: "flex", gap: "1rem"}}>
+                <TextField sx={{flexGrow:'0.5'}} label="Precio (en euros)" type='number' name='price' value={formData.price} onChange={handleInputChange} required/> 
+                <TextField sx={{flexGrow:'0.5'}} label="Aforo máximo" type='number' name='maxPeople' value={formData.maxPeople} onChange={handleInputChange} required />
+                </Box>
                 <Box>
                     <TextField accept="image/*" type='file' id='image-upload' onChange={handleImageChange} sx={{ display: "none" }} />
 
-                    <label htmlFor='image-upload'>
-                        <Box sx={{ display: "flex", gap: "1rem" }}>
-                            <Typography variant='p'>{imageName}</Typography>
-                            <Button variant="contained" color="secondary" component="span" startIcon={<CloudUpload />}>
+                    
+                </Box>
+                <TextField label="Descripción" slotProps={{ input: { inputProps: { maxLength: 1000 } } }} helperText={`${formData.description.length}/1000`} multiline rows={10} name='description' value={formData.description} onChange={handleInputChange} />
+                <label htmlFor='image-upload'>
+                        <Box sx={{ display: "flex", gap: "1rem", alignItems:'center' }}>
+                            <Button variant="outlined" color="secondary" component="span" startIcon={<CloudUpload />}>
                                 Subir imagen
                             </Button>
+                            <Typography variant='p'>{imageName}</Typography>
+
                         </Box>
                     </label>
-                </Box>
-                <Box sx={{display:"grid", gridTemplateColumns:'1fr 1fr', gap: '1rem'}}>
-                <Button variant="contained" color='error' component="a" href='/manage-floats' startIcon={<Close />}>Cancel</Button>
+                <Box sx={{display:"flex", gap: '1rem', justifyContent:'end'}}>
+                <Button variant="text" onClick={close}>Cancelar</Button>
                 <Button variant="contained" color="primary" type='submit' component="button" startIcon={<Save />}>Guardar</Button>
                 </Box>
             </Box>
+            </CardContent>
+            </Card>
+            </Modal>
         </>
     )
 }

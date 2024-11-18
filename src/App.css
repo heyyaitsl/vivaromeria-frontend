@@ -73,6 +73,7 @@ a, a:hover, a:visited, a:active {
 
 .pilgrimage-details-img {
   border-radius: 1rem;
+  max-height: 40rem;
 }
 
 .max-height-img{
