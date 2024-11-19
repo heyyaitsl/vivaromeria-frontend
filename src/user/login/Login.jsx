@@ -1,10 +1,12 @@
-import { Box, Button, FormControl, Input, InputLabel, TextField } from "@mui/material";
+import { Box, Button, Card, CardContent, FormControl, Input, InputLabel, Stack, TextField, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
+import { CelebrationOutlined } from "@mui/icons-material";
+import { Car } from "lucide-react";
 
 export function Login({register}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "user/login";
@@ -34,33 +36,47 @@ export function Login({register}) {
             // Redirigir a una página protegida o home
             navigate('/')
         } catch (error) {
-            setError('Login failed. Please check your credentials.');
+            setError('Inicio de sesión fallido. Por favor, revise sus credenciales.');
         }
     };
 
     return (
         <>
+        <Stack spacing={1} sx={{justifyContent: "center", alignItems: "center"}}>
+            <CelebrationOutlined color="white" sx={{fontSize:'4rem'}} />
+            <Typography sx={{fontWeight:'600'}} color="white" variant="h3">
+                Bienvenido de nuevo
+            </Typography>
+            <Typography color="white" variant="h5">
+                Inicia sesión para continuar
+            </Typography>
+            <Card sx={{minWidth:"50rem"}}>
+                <CardContent sx={{margin:"2rem"}}>
             <Box component="form"
-                sx={{ display: "grid", gap: 1 }} onSubmit={handleLogin}>
-                <FormControl>
-                    <InputLabel >
+                sx={{ display: "grid", gap:3 }} onSubmit={handleLogin}>
+                
+                    <Stack spacing={1}>
                         <Box
-                            sx={{ display: "flex", alignItems: "end", gap: "2px" }} >
-                            <PersonIcon /> Usuario </Box>
-                    </InputLabel>
-                    <Input onChange={(e) => setUsername(e.target.value)} required type="text"></Input></FormControl>
-                <FormControl>
-                    <InputLabel>
+                            sx={{ display: "flex", alignItems: "end", gap: "0.5rem", opacity:"90%" }} >
+                            <PersonIcon /><Typography variant="p"> Usuario </Typography></Box>
+                    
+                    <TextField variant="outlined" onChange={(e) => setUsername(e.target.value)} required type="text" placeholder="mariarodriguez"></TextField>
+                    </Stack>
+                    <Stack spacing={1}>
+
+                    
                         <Box
-                            sx={{ display: "flex", alignItems: "end", gap: "2px" }} >
-                            <VisibilityIcon />Contraseña
-                        </Box></InputLabel>
-                    <Input onChange={(e) => setPassword(e.target.value)} required type="password"></Input>
-                </FormControl>
+                            sx={{ display: "flex", alignItems: "end", gap: "0.5rem", opacity:"90%" }} >
+                            <VisibilityIcon /><Typography>Contraseña</Typography>
+                        </Box>
+                    <TextField variant="outlined" onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"required type="password"></TextField>
+                    </Stack>
+
                 <Button type="submit" variant="contained">Iniciar sesión</Button>
-                <Button component='a' onClick={register} color="secondary" variant="contained">Registrarse</Button>
+                <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}}><Typography> ¿No tienes cuenta? </Typography>
+                <Button component='a' onClick={register} color="primary" variant="text">Regístrate</Button></Box>
                 {error && <Box sx={{ color: "error.main" }}>{error}</Box>}
-            </Box>
+            </Box></CardContent></Card></Stack>
         </>
     )
 }

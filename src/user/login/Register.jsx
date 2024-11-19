@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  Box,  Button,  FormControl,  InputLabel,  Input,  TextField,  FormControlLabel,  Checkbox,  Typography, InputAdornment} from '@mui/material';
+import {  Box,  Button,  FormControl,  InputLabel,  Input,  TextField,  FormControlLabel,  Checkbox,  Typography, InputAdornment, Stack, Card, CardContent} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EmailIcon from '@mui/icons-material/Email';
@@ -9,6 +9,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import BadgeIcon from '@mui/icons-material/Badge';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CelebrationOutlined } from '@mui/icons-material';
 
 
 export function Register({login}) {
@@ -56,78 +57,100 @@ export function Register({login}) {
       // Handle successful registration (e.g., show success message, redirect to login)
       // Redirect to login page after successful registration
     } catch (error) {
-      setError('Registration failed. Please try again.');
+      setError('Registro fallido. Por favor, prueba otra vez.');
     }
   };
 
   return (
-    <Box component="form" sx={{ display: "grid", gap: 2, maxWidth: 400, margin: 'auto' }} onSubmit={handleRegister}>
-      <Typography variant="h4" align="center" color='primary'gutterBottom>
-        Register
-      </Typography>
-    
+    <Stack spacing={1} sx={{justifyContent: "center", alignItems: "center"}}>
+    <CelebrationOutlined color="white" sx={{fontSize:'4rem'}} />
+    <Typography sx={{fontWeight:'600'}} color="white" variant="h3">
+        Crear una cuenta
+    </Typography>
+    <Typography color="white" variant="h5">
+        Únete a nuestra comunidad de romerías
+    </Typography>
+    <Card sx={{minWidth:"50rem"}}>
+        <CardContent sx={{margin:"2rem"}}>
+    <Box component="form" sx={{ display: "grid", gap: 3, maxWidth: 400, margin: 'auto' }} onSubmit={handleRegister}>
+<Stack spacing={1}>
+    <Typography sx={{opacity:"90%"}} variant="p"> Nombre de usuario </Typography>
       <TextField
-        label={"Nombre de usuario"}
         onChange={(e) => setUsername(e.target.value)}
         required
+        placeholder='mariarodriguez'
         slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
                   <PersonIcon />
                 </InputAdornment>
               ),
             },
           }}
       /> 
+      </Stack>
+      <Stack spacing={1}>
+        <Typography sx={{opacity:"90%"}} variant="p"> Contraseña </Typography>
        <TextField
-        label={"Contraseña"}
+       placeholder='••••••••'
         onChange={(e) => setPassword(e.target.value)}
         required
         type='password'
         slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
                   <VisibilityIcon />
                 </InputAdornment>
               ),
             },
           }}
-      />
+          />
+          </Stack>
+          <Stack spacing={1}>
+            <Typography sx={{opacity:"90%"}} variant="p"> Nombre completo </Typography>
       <TextField
-        label="Nombre completo"
         onChange={(e) => setName(e.target.value)}
         required
+        placeholder='María Rodriguez Rodriguez'
         slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
                   <BadgeIcon />
                 </InputAdornment>
               ),
             },
           }}
-      />
-      <TextField
-        label="Correo electrónico"
+          />
+        </Stack>
+          <Stack spacing={1}>
+            <Typography sx={{opacity:"90%"}} variant="p"> Correo electróniico </Typography>
+            <TextField
         onChange={(e) => setEmail(e.target.value)}
+        placeholder='ejemplo@gmail.com'
+
         required
         type="email"
         slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
                   <EmailIcon />
                 </InputAdornment>
               ),
             },
           }}
-      />
+          />
+          </Stack>
+          <Stack spacing={1}>
+            <Typography sx={{opacity:"90%"}} variant="p"> Número de teléfono </Typography>
       <TextField
-        label="Número de teléfono"
         onChange={(e) => setPhoneNumber(e.target.value)}
         required
+        placeholder='666777888'
+
         type='tel'
         slotProps={{
             input: {
@@ -138,7 +161,7 @@ export function Register({login}) {
               ),
             },
           }}
-      />
+      /></Stack>
       <FormControlLabel
         control={
           <Checkbox
@@ -165,16 +188,17 @@ export function Register({login}) {
       </Button>
       {profilePicture && (
         <Typography variant="body2">
-          Selected file: {imageName}
+          Archivo seleccionado: {imageName}
         </Typography>
       )}
       <Button type="submit" variant="contained" color="primary">
         Registrarse
       </Button>
-      <Button onClick={login} color="secondary">
-       ¿Ya tienes una cuenta? Inicia sesión
-      </Button>
+      <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}}><Typography> ¿Ya tienes cuenta? </Typography>
+      <Button onClick={login} color="primary"variant='text'>
+       Inicia sesión
+      </Button></Box>
       {error && <Typography color="error">{error}</Typography>}
-    </Box>
+    </Box></CardContent></Card></Stack>
   );
 }
