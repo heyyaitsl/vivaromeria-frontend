@@ -2,8 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getDate } from 'src/common/dateUtils'
 import { getStatus, getStatusClass } from 'src/common/StatusUtils.jsx'
-import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Button, Container, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Add } from '@mui/icons-material';
 
 export function PilgrimageList({filter}){
     const urlBase = import.meta.env.VITE_URL_BASE + 'pilgrimages';
@@ -56,6 +57,7 @@ export function PilgrimageList({filter}){
     
     return (
         <>
+        
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -98,6 +100,7 @@ export function PilgrimageList({filter}){
       onChange={handlePageChange}/>
      
     </Paper>
+
         </>
     )
 }

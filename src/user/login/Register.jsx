@@ -9,7 +9,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import BadgeIcon from '@mui/icons-material/Badge';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { CelebrationOutlined } from '@mui/icons-material';
+import { CelebrationOutlined, DirectionsBus } from '@mui/icons-material';
 
 
 export function Register({login}) {
@@ -167,10 +167,10 @@ export function Register({login}) {
           <Checkbox
             checked={isFloathandler }
             onChange={(e) => setIsFloathandler (e.target.checked)}
-            icon={<DirectionsBusIcon />}
-            checkedIcon={<DirectionsBusIcon />}
+            icon={<DirectionsBus />}
+            checkedIcon={<DirectionsBus />}
           />
-        }
+        }        
         label="¿Eres carrocero?"
       />
       <Button

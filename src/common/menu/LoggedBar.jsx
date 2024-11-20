@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Avatar, Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
-import { AccountCircle, AgricultureOutlined, ConfirmationNumberOutlined, KeyboardArrowDown, LogoutOutlined, SettingsOutlined } from "@mui/icons-material";
+import { AccountCircle, AgricultureOutlined, ConfirmationNumberOutlined, DirectionsBusFilledOutlined, DirectionsBusOutlined, KeyboardArrowDown, LogoutOutlined, SettingsOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 
@@ -55,11 +55,11 @@ export function LoggedBar() {
       onClose={handleMenuClose}
       sx={{mt:'4rem'}}
     >
-      {role === 'ROLE_FLOATS' &&(<Link to="/manage-floats"><MenuItem onClick={handleMenuClose}><AgricultureOutlined/><p>Mis carrozas</p></MenuItem></Link>)}
+      {role === 'ROLE_FLOATS' &&(<Link to="/manage-floats"><MenuItem onClick={handleMenuClose}><DirectionsBusOutlined/><p>Mis carrozas</p></MenuItem></Link>)}
       <Link to="/myTickets"><MenuItem onClick={handleMenuClose}><ConfirmationNumberOutlined/><p>Mis entradas</p></MenuItem></Link>
       <MenuItem onClick={handleMenuClose}><SettingsOutlined/><p>Configuración</p></MenuItem>
       <Divider sx={{margin:'0 !important', padding:'0 !important'}} component="li" />
-      <MenuItem onClick={logout}><LogoutOutlined/><p>Cerrar sesión</p></MenuItem>
+      <MenuItem sx={{color:"#ff0000"}} onClick={logout}><LogoutOutlined/><p>Cerrar sesión</p></MenuItem>
     </Menu>
   );  
     return (

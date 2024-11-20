@@ -15,7 +15,7 @@ export function CreateFloats({open, close, reload, id}) {
 
 
     useEffect(() => {
-        if(id){loadFloats();}else{setFloats([]);}
+        if(id){loadFloats();}else{setFloats([]);setTitle("Añadir carroza");}
     }, [id])
     const loadFloats = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
@@ -34,7 +34,8 @@ export function CreateFloats({open, close, reload, id}) {
             maxPeople: '',
             image: '',
             pilgrimages: {} 
-        })
+        });
+        
     }
 
     const [formData, setFormData] = useState({
@@ -63,7 +64,8 @@ export function CreateFloats({open, close, reload, id}) {
             });
             setImageName(floats.image? "Imagen seleccionada" : "No se ha seleccionado ninguna imagen");
         }else{
-            loadFormData();}
+            loadFormData();
+        }
     }, [floats]);
 
 
@@ -118,7 +120,7 @@ export function CreateFloats({open, close, reload, id}) {
 
         <Card style={style}>
         <Box sx={{backgroundColor: "var(--blue)"}}>
-            <Typography sx={{ padding: '2rem',color:'white'}}variant='h4'>{title}</Typography>
+            <Typography  color="white" sx={{ padding: '2rem'}}variant='h4'>{title}</Typography>
 
             </Box>
             <CardContent sx={{overflow:'scroll', height: 450, display:'flex', flexDirection:'column', gap:'1rem'}}>

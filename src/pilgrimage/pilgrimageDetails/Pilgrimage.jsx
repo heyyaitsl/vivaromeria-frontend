@@ -14,18 +14,20 @@ export function Pilgrimage({ id }) {
     const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
     const urlBaseFloats = import.meta.env.VITE_URL_BASE + "floats";
     const urlBaseComments = import.meta.env.VITE_URL_BASE + "comments";
+    const urlBaseUser = import.meta.env.VITE_URL_BASE + "user";
     const [openModalFloat, setOpenModalFloat] = useState(false);
+    const [userComment, setUserComment] = useState();
     const handleModalFloatOpen = () => setOpenModalFloat(true);
     const handleModalFloatClose = () => setOpenModalFloat(false);
 
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
         loadPilgrimage();
-    }, [])
+    }, [id])
     const [comments, setComments] = useState([]);
     useEffect(() => {
         loadComments();
-    }, [])
+    }, [id])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);
@@ -35,6 +37,16 @@ export function Pilgrimage({ id }) {
         const result = await axios.get(`${urlBaseComments}/pilgrimage/${id}`)
         setComments(result.data);
         console.log(result.data);
+        const usernames = result.data.map(comment => comment.username);
+        loadUsers(usernames);
+    }
+
+    const loadUsers = async (usernames) => {
+        const userRequests = usernames.map(username => axios.get(`${urlBaseUser}/${username}`));
+        const usersData = await Promise.all(userRequests);
+
+        const users = usersData.map(user => user.data);
+        setUserComment(users);
     }
     const [floats, setFloats] = useState([]);
     const onSubmit = async (e) => {
@@ -61,10 +73,10 @@ export function Pilgrimage({ id }) {
 
     const [key, setKey] = useState(0);
 
-  const reloadComponent = () => {
-    setKey(prevKey => prevKey + 1);
-  };
-    
+    const reloadComponent = () => {
+        setKey(prevKey => prevKey + 1);
+    };
+
 
     return (
         <>
@@ -73,7 +85,7 @@ export function Pilgrimage({ id }) {
                     <img className="pilgrimage-details-img" src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
                     <Stack spacing={1}>
                         <Typography sx={{ fontWeight: "600" }} variant="h3"> {pilgrimage.name}</Typography>
-                        <Stack sx={{opacity:'90%'}} direction="row" spacing={2}>
+                        <Stack sx={{ opacity: '90%' }} direction="row" spacing={2}>
                             <Box sx={{ display: 'flex', gap: '0.8rem' }}>
                                 <CalendarTodayOutlined />
                                 <Typography variant="h5">{getDate(pilgrimage.date)}</Typography>
@@ -93,48 +105,54 @@ export function Pilgrimage({ id }) {
                                 <LanguageOutlined />
                                 <Typography color="primary" variant="h5"><a href={pilgrimage.url}>Sitio web oficial</a></Typography>
                             </Box>
-                           
+
 
                         </Stack>
-                        
+
                     </Stack>
                     <Stack spacing={1}>
-                    <Typography sx={{ fontWeight: "600" }} variant="h4"> Descripción</Typography>
-                    <Typography sx={{opacity:'90%'}} variant="h5">{pilgrimage.description}</Typography>
+                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Descripción</Typography>
+                        <Typography sx={{ opacity: '90%' }} variant="h5">{pilgrimage.description}</Typography>
                     </Stack>
                     <Stack spacing={1}>
-                    <Typography sx={{ fontWeight: "600" }} variant="h4"> Ruta</Typography>
-                    <Typography sx={{opacity:'90%'}} variant="h5">{pilgrimage.route}</Typography>
+                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Ruta</Typography>
+                        <Typography sx={{ opacity: '90%' }} variant="h5">{pilgrimage.route}</Typography>
                     </Stack>
 
                     <Stack spacing={1}>
                         <Typography sx={{ fontWeight: "600" }} variant="h4"> Comentarios </Typography>
-                        <Card >
-                                <CardContent sx={{display:'flex',  gap:'1rem'}}>
+                        {comments.length > 0 ? comments.map(comment => {
+                            const user = userComment && userComment.length > 0
+                                ? userComment.find(user => user.username === comment.username)
+                                : null; return (
+                                    <Card key={comment.id}>
+                                        <CardContent sx={{ display: 'flex', gap: '1rem' }}>
 
-                                <Avatar></Avatar>
-                                <Stack spacing={0.5}>
-                                <Box sx={{display:'flex', justifyContent:'space-between'}}>
-                                <Typography sx={{ fontWeight: "600" }} variant="h6">Ana Santana</Typography>
-                                <Rating name="read-only" value={3} readOnly /></Box>
-                                <Typography sx={{opacity:'80%'}} variant="p">20 de noviembre de 2023</Typography>
-                                <Typography sx={{textAlign:"justify"}} variant="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tempus mi. Quisque feugiat quam magna. Morbi neque nisl, tincidunt vel ex vitae, efficitur volutpat sem. Morbi dictum iaculis egestas. Proin dignissim blandit nunc eu scelerisque. Donec rutrum lorem eu augue congue, non mollis arcu auctor. Curabitur ultrices sem ut metus porttitor cursus. Nulla eget dui est. Aliquam erat volutpat.</Typography>
-                                </Stack>
-                                </CardContent>
-                        </Card>
+                                            <Avatar  className="profile-img" src={user? "data:image/png;base64,"+user.photo : ""} alt="Usuario" ></Avatar>
+                                            <Stack spacing={0.5} sx={{ width: '100%' }}>
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                    <Typography sx={{ fontWeight: "600" }} variant="h6">{user ? user.name : "Cargando..."}</Typography>
+                                                    <Rating name="read-only" value={comment.valoration} readOnly /></Box>
+                                                <Typography sx={{ opacity: '80%' }} variant="p">20 de noviembre de 2023</Typography>
+                                                <Typography sx={{ textAlign: "justify" }} variant="p">{comment.description}</Typography>
+                                            </Stack>
+                                        </CardContent>
+                                    </Card>)
+                        })
+                            : <Typography sx={{ opacity: '90%' }} variant="h5">No hay comentarios aún</Typography>}
                     </Stack>
                     <Stack spacing={1}>
-                        <Box sx={{display:'flex', gap:'1rem', alignItems:'center'}}>
-                        <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas disponibles </Typography>
-                        {role =='ROLE_FLOATS' ? <>
-                        <Fab size='small' color="primary" aria-label="add" onClick={handleModalFloatOpen}>
-                            <Add />
-                            </Fab>
-                            <Modal open={openModalFloat} onClose={handleModalFloatClose}
-                            >
-                            <SelectFloat floats={filteredFloats} selectFloat={setSelectedFloat} onSubmit={onSubmit} />
-                            </Modal></> : <></>}</Box>
-                        <FloatList key={key} id={id}/>
+                        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <Typography sx={{ fontWeight: "600" }} variant="h4"> Carrozas disponibles </Typography>
+                            {role == 'ROLE_FLOATS' ? <>
+                                <Fab size='small' color="primary" aria-label="add" onClick={handleModalFloatOpen}>
+                                    <Add />
+                                </Fab>
+                                <Modal open={openModalFloat} onClose={handleModalFloatClose}
+                                >
+                                    <SelectFloat floats={filteredFloats} selectFloat={setSelectedFloat} onSubmit={onSubmit} />
+                                </Modal></> : <></>}</Box>
+                        <FloatList key={key} id={id} />
                     </Stack>
                 </Stack>
             </Container>
