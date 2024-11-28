@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Ticket } from '../ticket/Ticket.jsx';
 import { TicketList } from '../ticket/TicketList.jsx';
-import { Container, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 
 export function MyTicketsPage(){
@@ -23,16 +23,15 @@ export function MyTicketsPage(){
 
     return (
         <>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'primary.main' }}>
-              Mis Tickets de Romerías
+        <Stack spacing={1}>
+            <Typography variant="h4" sx={{ fontWeight: "600" }}>
+              Mis Entradas
             </Typography>
-        <Container maxWidth="md" sx={{ mt: 4 }}>
-          {selectedTicket ? (
-            <Ticket ticket={selectedTicket} onBack={() => setSelectedTicket(null)} />
-          ) : (
+          
+            
             <TicketList tickets={tickets} onSelectTicket={setSelectedTicket} />
-          )}
-        </Container>
+
+          </Stack>
         </>
     );
   }

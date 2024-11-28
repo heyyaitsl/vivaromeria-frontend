@@ -6,12 +6,14 @@ import { CreatePilgrimage } from "../pilgrimage/CreatePilgrimage";
 
 export function Home({filter}) {
 
+  const role = localStorage.getItem('role');
+
     const [openModalPilgrimage, setOpenModalPilgrimage] = useState(false);
     const handleModalPilgrimageOpen = () => setOpenModalPilgrimage(true);
     const handleModalPilgrimageClose = () => setOpenModalPilgrimage(false);
   
     const [key, setKey] = useState(0);
-    const [id, setId] = useState(null);
+    
   
     const reloadComponent = () => {
       setKey(prevKey => prevKey + 1);
@@ -20,9 +22,9 @@ export function Home({filter}) {
     return(
         <>
         <Stack spacing={1}>
-        <Button sx={{maxWidth:"15rem", alignSelf:"end"}} startIcon={<Add/>} variant="contained" color="primary" onClick={() => {setId(null); handleModalPilgrimageOpen()}}  >
+        {role === 'ROLE_ADMIN' &&(<Button sx={{maxWidth:"15rem", alignSelf:"end"}} startIcon={<Add/>} variant="contained" color="primary" onClick={() => {handleModalPilgrimageOpen()}}  >
         Nueva romería
-      </Button>
+      </Button>)}
         <PilgrimageList key={key} filter={filter}/>
         
         </Stack>

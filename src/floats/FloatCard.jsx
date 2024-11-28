@@ -3,11 +3,14 @@ import "./Float.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BuyTicketPage } from "../pages/BuyTicketPage";
 
 
 export function FloatCard({name, image, description, username, price, maxPeople, idPilgrimage, idFloat}) {
     const urlBaseUser = import.meta.env.VITE_URL_BASE+"user/" + username;
-
+    const [openModalTicket, setOpenModalTicket] = useState(false);
+    const handleModalTicketOpen = () => setOpenModalTicket(true);
+    const handleModalTicketClose = () => setOpenModalTicket(false);
     const [user, setUser] = useState([]);
     useEffect(() => {loadUser()},[]);    
     const loadUser = async() => {
@@ -49,12 +52,13 @@ export function FloatCard({name, image, description, username, price, maxPeople,
                 <Typography sx={{ fontWeight: "600" }} variant="h6"> {maxPeople} personas</Typography>
                 </Stack>
 
-                <Button component={Link} 
-                to={"/buyticket/"+idPilgrimage+"/"+idFloat} color='secondary'variant="contained" size="medium">Comprar entrada</Button>
+                <Button onClick={handleModalTicketOpen}
+                color='secondary'variant="contained" size="medium">Comprar entrada</Button>
 
              </CardActions>
 
         </Card>
+        <BuyTicketPage open={openModalTicket} close={handleModalTicketClose} idPilgrimage={idPilgrimage} idFloat={idFloat}/>
         </>
     )
 }

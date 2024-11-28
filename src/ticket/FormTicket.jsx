@@ -54,11 +54,8 @@ const onSubmit = async (event) => {
 
     return (
         <>
-            <Container maxWidth="sm" >
-                <Box sx={{ my: 4 }}>
-                    <Typography variant="h4" component="h1" gutterBottom>
-                        Compra de Entradas para Romería
-                    </Typography>
+            <Container>
+                <Box>
                     <form  onSubmit={onSubmit}> 
                         <FormControl fullWidth margin="normal">
                             {pilgrimage.name ? (<TextField
@@ -89,7 +86,7 @@ const onSubmit = async (event) => {
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             fullWidth
                             sx={{ mt: 2 }}
                         >

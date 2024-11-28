@@ -6,7 +6,6 @@ import axios from "axios";
 import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { CelebrationOutlined } from "@mui/icons-material";
-import { Car } from "lucide-react";
 
 export function Login({register}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "user/login";

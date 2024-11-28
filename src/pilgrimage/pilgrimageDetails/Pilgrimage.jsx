@@ -1,13 +1,14 @@
-import { Avatar, Box, Button, Card, CardContent, Container, Fab, Grid2, InputLabel, MenuItem, Modal, Rating, Select, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardContent, Container, Fab, Grid2, IconButton, InputLabel, MenuItem, Modal, Rating, Select, Stack, Typography } from "@mui/material"
 import './Pilgrimage.css'
 import { useParams } from "react-router-dom";
 import { getDate } from 'src/common/dateUtils'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getHour } from "../../common/dateUtils";
-import { AccessTimeOutlined, Add, CalendarTodayOutlined, LanguageOutlined, PlaceOutlined } from "@mui/icons-material";
+import { AccessTimeOutlined, Add, CalendarTodayOutlined, Delete, Edit, LanguageOutlined, Padding, PlaceOutlined } from "@mui/icons-material";
 import { FloatList } from "../../floats/FloatList";
 import { SelectFloat } from "../../floats/SelectFloat";
+import { CreatePilgrimage } from "../CreatePilgrimage";
 
 export function Pilgrimage({ id }) {
     const role = localStorage.getItem('role');
@@ -19,6 +20,18 @@ export function Pilgrimage({ id }) {
     const [userComment, setUserComment] = useState();
     const handleModalFloatOpen = () => setOpenModalFloat(true);
     const handleModalFloatClose = () => setOpenModalFloat(false);
+
+    const [openModalPilgrimage, setOpenModalPilgrimage] = useState(false);
+  const handleModalPilgrimageOpen = () => setOpenModalPilgrimage(true);
+  const handleModalPilgrimageClose = () => setOpenModalPilgrimage(false);
+
+ 
+
+  const [keyPilgrimage, setKeyPilgrimage] = useState(0);
+
+  const reloadComponentPilgrimage = () => {
+    setKeyPilgrimage(prevKey => prevKey + 1);
+  };
 
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
@@ -81,9 +94,17 @@ export function Pilgrimage({ id }) {
     return (
         <>
             <Container >
-                <Stack spacing={3}>
-                    <img className="pilgrimage-details-img" src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} alt="romeria"></img>
-                    <Stack spacing={1}>
+                <Stack  spacing={3}>
+                    <Box key={keyPilgrimage} sx={{position:"relative", display:"inline-block"}}>
+                    <img className="pilgrimage-details-img" 
+                    src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} 
+                    alt="romeria"></img>
+                    {role === 'ROLE_ADMIN' &&(
+                    <Box sx={{position:"absolute", right:"1rem", top: "1rem", display:"flex", gap:"0.5rem"}}>
+                    <Fab size="small" color="primary" onClick={handleModalPilgrimageOpen}><Edit/></Fab>
+                    <Fab  size="small" color="error"><Delete/></Fab></Box>)}
+                </Box>
+                    <Stack key={keyPilgrimage} spacing={1}>
                         <Typography sx={{ fontWeight: "600" }} variant="h3"> {pilgrimage.name}</Typography>
                         <Stack sx={{ opacity: '90%' }} direction="row" spacing={2}>
                             <Box sx={{ display: 'flex', gap: '0.8rem' }}>
@@ -155,6 +176,8 @@ export function Pilgrimage({ id }) {
                         <FloatList key={key} id={id} />
                     </Stack>
                 </Stack>
+                <CreatePilgrimage open={openModalPilgrimage} id={id} close={handleModalPilgrimageClose} reload={reloadComponentPilgrimage}/>
+
             </Container>
 
         </>
