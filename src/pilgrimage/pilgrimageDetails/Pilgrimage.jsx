@@ -9,6 +9,7 @@ import { AccessTimeOutlined, Add, CalendarTodayOutlined, Delete, Edit, LanguageO
 import { FloatList } from "../../floats/FloatList";
 import { SelectFloat } from "../../floats/SelectFloat";
 import { CreatePilgrimage } from "../CreatePilgrimage";
+import { CreateComment } from "./CreateComment";
 
 export function Pilgrimage({ id }) {
     const role = localStorage.getItem('role');
@@ -24,8 +25,15 @@ export function Pilgrimage({ id }) {
     const [openModalPilgrimage, setOpenModalPilgrimage] = useState(false);
   const handleModalPilgrimageOpen = () => setOpenModalPilgrimage(true);
   const handleModalPilgrimageClose = () => setOpenModalPilgrimage(false);
+  const [openModalComment, setOpenModalComment] = useState(false);
+  const handleModalCommentOpen = () => setOpenModalComment(true);
+  const handleModalPCommentClose = () => setOpenModalComment(false);
+  const [keyComment, setKeyComment] = useState(0);
 
- 
+  const reloadComment = () => {
+    console.log('reloading comment');
+    setKeyComment(keyComment + 1);
+  };
 
   const [keyPilgrimage, setKeyPilgrimage] = useState(0);
 
@@ -36,11 +44,12 @@ export function Pilgrimage({ id }) {
     const [pilgrimage, setPilgrimage] = useState([]);
     useEffect(() => {
         loadPilgrimage();
-    }, [id])
+    }, [keyPilgrimage])
     const [comments, setComments] = useState([]);
     useEffect(() => {
+        console.log('Entro useEffect')
         loadComments();
-    }, [id])
+    }, [keyComment])
     const loadPilgrimage = async () => {
         const result = await axios.get(`${urlBase}/${id}`)
         setPilgrimage(result.data);
@@ -95,7 +104,7 @@ export function Pilgrimage({ id }) {
         <>
             <Container >
                 <Stack  spacing={3}>
-                    <Box key={keyPilgrimage} sx={{position:"relative", display:"inline-block"}}>
+                    <Box sx={{position:"relative", display:"inline-block"}}>
                     <img className="pilgrimage-details-img" 
                     src={pilgrimage.image ? "data:image/png;base64," + pilgrimage.image : "/image-not-available.png"} 
                     alt="romeria"></img>
@@ -104,7 +113,7 @@ export function Pilgrimage({ id }) {
                     <Fab size="small" color="primary" onClick={handleModalPilgrimageOpen}><Edit/></Fab>
                     <Fab  size="small" color="error"><Delete/></Fab></Box>)}
                 </Box>
-                    <Stack key={keyPilgrimage} spacing={1}>
+                    <Stack spacing={1}>
                         <Typography sx={{ fontWeight: "600" }} variant="h3"> {pilgrimage.name}</Typography>
                         <Stack sx={{ opacity: '90%' }} direction="row" spacing={2}>
                             <Box sx={{ display: 'flex', gap: '0.8rem' }}>
@@ -141,7 +150,12 @@ export function Pilgrimage({ id }) {
                     </Stack>
 
                     <Stack spacing={1}>
+                        <Box sx={{display:'flex', gap:'1rem'}}>
                         <Typography sx={{ fontWeight: "600" }} variant="h4"> Comentarios </Typography>
+                        <Fab size='small' color="primary" aria-label="add" onClick={handleModalCommentOpen}>
+                            <Add />
+                        </Fab>
+                        </Box>
                         {comments.length > 0 ? comments.map(comment => {
                             const user = userComment && userComment.length > 0
                                 ? userComment.find(user => user.username === comment.username)
@@ -154,7 +168,7 @@ export function Pilgrimage({ id }) {
                                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                                     <Typography sx={{ fontWeight: "600" }} variant="h6">{user ? user.name : "Cargando..."}</Typography>
                                                     <Rating name="read-only" value={comment.valoration} readOnly /></Box>
-                                                <Typography sx={{ opacity: '80%' }} variant="p">20 de noviembre de 2023</Typography>
+                                                <Typography sx={{ opacity: '80%' }} variant="p">{getDate(comment.date)+ " | " + getHour(comment.date)}</Typography>
                                                 <Typography sx={{ textAlign: "justify" }} variant="p">{comment.description}</Typography>
                                             </Stack>
                                         </CardContent>
@@ -177,7 +191,7 @@ export function Pilgrimage({ id }) {
                     </Stack>
                 </Stack>
                 <CreatePilgrimage open={openModalPilgrimage} id={id} close={handleModalPilgrimageClose} reload={reloadComponentPilgrimage}/>
-
+                <CreateComment open={openModalComment} close={handleModalPCommentClose} reload={reloadComment} pilgrimageId={id}/>
             </Container>
 
         </>
