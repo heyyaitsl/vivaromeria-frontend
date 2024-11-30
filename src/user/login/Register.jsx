@@ -47,7 +47,8 @@ export function Register({login}) {
       phoneNumber: phoneNumber,
       role: isFloathandler  ? 'ROLE_FLOATS' : 'ROLE_USER',
       photo: profilePicture,
-      floats: null}
+      floats: null,
+      comments: null}
       console.log(formData);
 
       const response = await axios.post(urlBase, formData);

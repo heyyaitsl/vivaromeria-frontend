@@ -11,6 +11,7 @@ import { ManageFloats } from './pages/ManageFloats.jsx'
 import { AuthProvider } from './AuthContext.jsx'
 import { MyTicketsPage } from './pages/MyTicketsPage.jsx'
 import { useState } from 'react'
+import { Profile } from './user/Profile.jsx'
 
 
 
@@ -33,6 +34,7 @@ export function App() {
       <Route path='/floats/edit' element={<CreateFloats/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
       <Route path='/myTickets' element={<MyTicketsPage/>}></Route>
+      <Route path='/profile' element={<Profile/>}></Route>
       </Routes>
 
       </Container></AuthProvider>
