@@ -1,9 +1,8 @@
 import { Alert, Avatar, Box, Button, Card, CardContent, Collapse, IconButton, Modal, Stack, TextField, Typography } from "@mui/material";
 import "dayjs/locale/es";
-import { Close, CloudUpload, Password, Save } from '@mui/icons-material';
+import { Close, CloudUpload, Save } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
 
 
 export function Profile() {
@@ -116,7 +115,10 @@ export function Profile() {
                                 <Typography variant="h6">Número de teléfono</Typography>
                                 <TextField name='phoneNumbebr' type="tel" value={formData.phoneNumber} required onChange={handleInputChange} />
                             </Stack>
-
+                            <Stack spacing={1}>
+                                <Typography variant="h6">Contraseña</Typography>
+                                <TextField name='password' type="password" value={formData.password} required onChange={handleInputChange} />
+                            </Stack>
                         </Stack>
 
                         <Box>

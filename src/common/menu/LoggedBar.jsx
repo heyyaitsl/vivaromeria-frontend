@@ -57,7 +57,7 @@ export function LoggedBar() {
     >
       {role === 'ROLE_FLOATS' &&(<Link to="/manage-floats"><MenuItem onClick={handleMenuClose}><DirectionsBusOutlined/><p>Mis carrozas</p></MenuItem></Link>)}
       <Link to="/myTickets"><MenuItem onClick={handleMenuClose}><ConfirmationNumberOutlined/><p>Mis entradas</p></MenuItem></Link>
-      <MenuItem onClick={handleMenuClose}><SettingsOutlined/><p>Configuración</p></MenuItem>
+      <Link to="/profile"><MenuItem onClick={handleMenuClose}><SettingsOutlined/><p>Configuración</p></MenuItem></Link>
       <Divider sx={{margin:'0 !important', padding:'0 !important'}} component="li" />
       <MenuItem sx={{color:"#ff0000"}} onClick={logout}><LogoutOutlined/><p>Cerrar sesión</p></MenuItem>
     </Menu>
