@@ -10,9 +10,11 @@ import { FloatList } from "../../floats/FloatList";
 import { SelectFloat } from "../../floats/SelectFloat";
 import { CreatePilgrimage } from "../CreatePilgrimage";
 import { CreateComment } from "./CreateComment";
+import { useAuth } from "../../AuthContext";
 
 export function Pilgrimage({ id }) {
     const role = localStorage.getItem('role');
+    const { isLogged } = useAuth();
     const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
     const urlBaseFloats = import.meta.env.VITE_URL_BASE + "floats";
     const urlBaseComments = import.meta.env.VITE_URL_BASE + "comments";
@@ -150,11 +152,12 @@ export function Pilgrimage({ id }) {
                     </Stack>
 
                     <Stack spacing={1}>
-                        <Box sx={{display:'flex', gap:'1rem'}}>
+                        <Box sx={{display:'flex', gap:'1rem', alignItems:'center'}}>
                         <Typography sx={{ fontWeight: "600" }} variant="h4"> Comentarios </Typography>
+                        {isLogged &&
                         <Fab size='small' color="primary" aria-label="add" onClick={handleModalCommentOpen}>
                             <Add />
-                        </Fab>
+                        </Fab>}
                         </Box>
                         {comments.length > 0 ? comments.map(comment => {
                             const user = userComment && userComment.length > 0

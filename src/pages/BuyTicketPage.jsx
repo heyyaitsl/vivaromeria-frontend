@@ -9,10 +9,10 @@ export function BuyTicketPage({open, close, idPilgrimage, idFloat}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isLogged) {
+        if (!isLogged&&open) {
             navigate('/login'); // Redirige al login si no está logueado
         }
-    }, [isLogged]);
+    }, [isLogged, open]);
     const style = {
         position: 'absolute',
         top: '50%',
