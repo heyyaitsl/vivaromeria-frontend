@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 export function CreateFloats({open, close, reload, id}) {
     const urlBase = import.meta.env.VITE_URL_BASE + "floats";
+    const token = localStorage.getItem('token'); 
     const username= localStorage.getItem('username');
     const [floats, setFloats] = useState([]);
     const [title, setTitle] = useState("Añadir carroza");
@@ -96,8 +97,10 @@ export function CreateFloats({open, close, reload, id}) {
     }
     const onSubmit = async (event) => {
         event.preventDefault();
-        console.log('onSubmit');
-        const response = await axios.post(urlBase, formData);
+        console.log('onSubmit llega');
+        const response = await axios.post(urlBase, formData, {headers: {
+            'Authorization': `Bearer ${token}` // Incluye el token en el header
+          }});
         console.log("Elemento guardado: ", response.data);
         close();
         reload();

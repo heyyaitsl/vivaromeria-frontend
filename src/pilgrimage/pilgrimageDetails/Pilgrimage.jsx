@@ -13,6 +13,7 @@ import { CreateComment } from "./CreateComment";
 import { useAuth } from "../../AuthContext";
 
 export function Pilgrimage({ id }) {
+    const token = localStorage.getItem('token'); 
     const role = localStorage.getItem('role');
     const { isLogged } = useAuth();
     const urlBase = import.meta.env.VITE_URL_BASE + "pilgrimages";
@@ -76,7 +77,9 @@ export function Pilgrimage({ id }) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`);
+        const response = await axios.get(`${urlBase}/${id}/addFloat/${selectedFloat}`, {headers: {
+            'Authorization': `Bearer ${token}` // Incluye el token en el header
+          }});
         console.log(response.data);
         handleModalFloatClose();
         reloadComponent();

@@ -161,9 +161,9 @@ export function CreatePilgrimage({open, close, reload, id}) {
                     onChange={handleInputChange}
                     required
                 >
-                    <MenuItem value={1}>Realizado</MenuItem>
-                    <MenuItem value={2}>Cancelado</MenuItem>
-                    <MenuItem value={3}>Pendiente</MenuItem>
+                    <MenuItem value={1}>Finalizada</MenuItem>
+                    <MenuItem value={2}>Cancelada</MenuItem>
+                    <MenuItem value={3}>Próximamente</MenuItem>
                 </Select></FormControl>
                 </Box>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es' >
